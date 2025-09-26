@@ -16,7 +16,7 @@ const SavedScreen = () => {
       <View style={styles.main}>
         <Text style={styles.emoji}>💝</Text>
         <Text style={styles.title}>Favorites Coming Soon</Text>
-        <Text style={styles.text2}>
+        <Text style={styles.text}>
           This feature will allow you to save your favorite events and restaurants!
         </Text>
       </View>
@@ -28,11 +28,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
   },
   header: {
     padding: 20,
     backgroundColor: 'white',
     borderBottomColor: '#e0e0e0',
+    borderBottomWidth: 1,
   },
   heading: {
     color: '#333333',
@@ -55,12 +58,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
     color: '#333333',
+    fontWeight: 'bold',
     marginBottom: 7,
     textAlign: 'center',
   },
-  text2: {
+  text: {
     fontSize: 16,
     color: '#666666',
     textAlign: 'center',
