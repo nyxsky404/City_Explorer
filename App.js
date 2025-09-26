@@ -7,6 +7,7 @@ import { Text } from 'react-native';
 import EventsScreen from './src/screens/EventsScreen';
 import FoodScreen from './src/screens/FoodScreen';
 import SavedScreen from './src/screens/SavedScreen';
+import {Ionicons} from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,20 +16,33 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen 
-            name="Events" 
-            component={EventsScreen}
-            options={{ title: 'Events' }}
+          <Tab.Screen name="Events" component={EventsScreen}
+          options={{
+            title: 'Events',
+          tabBarIcon: ()=>{
+            return <Ionicons name="calendar-number-outline"
+            size='24'/>
+          }
+        }}
           />
-          <Tab.Screen 
-            name="Food" 
-            component={FoodScreen}
-            options={{ title: 'Food' }}
+          <Tab.Screen name="Food" component={FoodScreen}
+            options={{ title: 'Food',
+              tabBarIcon: ()=>{
+            return <Ionicons name="fast-food-outline"
+            size='24' />
+            
+          }
+            }}
           />
-          <Tab.Screen 
-            name="Saved" 
+          <Tab.Screen name="Saved" 
             component={SavedScreen}
-            options={{ title: 'Saved' }}
+            options={{ title: 'Saved',
+              headerShown: false,
+              tabBarIcon: ()=>{
+            return <Ionicons name="bookmark-outline"
+            size='24'/>
+          }
+            }}
           />
         </Tab.Navigator>
         <StatusBar style="auto" />

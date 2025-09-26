@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   header: {
     padding: 20,
     backgroundColor: 'white',
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: "grey",
     borderBottomWidth: 1,
   },
   heading: {
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 5,
+    
   },
   subheading: {
     fontSize: 16,
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 40,
   },
   emoji: {
     fontSize: 64,
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666666',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 23,
   },
 });
 
