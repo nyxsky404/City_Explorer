@@ -19,6 +19,7 @@ export default function App() {
           <Tab.Screen name="Events" component={EventsScreen}
           options={{
             title: 'Events',
+            headerShown: false,
           tabBarIcon: ()=>{
             return <Ionicons name="calendar-number-outline"
             size='24'/>
@@ -27,6 +28,7 @@ export default function App() {
           />
           <Tab.Screen name="Food" component={FoodScreen}
             options={{ title: 'Food',
+              headerShown: false,
               tabBarIcon: ()=>{
             return <Ionicons name="fast-food-outline"
             size='24' />
