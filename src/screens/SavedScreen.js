@@ -28,14 +28,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: 'grey',
   },
   header: {
     padding: 20,
     backgroundColor: 'white',
-    borderBottomColor: "grey",
-    borderBottomWidth: 1,
   },
   heading: {
     color: '#333333',
