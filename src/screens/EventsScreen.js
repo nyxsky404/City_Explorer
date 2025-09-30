@@ -91,12 +91,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   category: {
-    fontSize: 12,
-    // color: '#007AFF',
-    // backgroundColor: '#E3F2FD',
-    // paddingHorizontal: 8,
-    // paddingVertical: 4,
-    // borderRadius: 12,
+    fontSize: 12
   },
   dateTime: {
     fontSize: 14,
