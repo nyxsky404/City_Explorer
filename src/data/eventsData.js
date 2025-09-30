@@ -8,7 +8,7 @@ export const mockEvents = [
     time: '2:00 PM - 11:00 PM',
     location: 'Central Park',
     image: 'https://via.placeholder.com/300x200?text=Music+Festival',
-    category: 'Music',
+    category: '🎵 Music',
   },
   {
     id: 'event2',
@@ -19,7 +19,7 @@ export const mockEvents = [
     time: '6:00 PM - 9:00 PM',
     location: 'Downtown Art Gallery',
     image: 'https://via.placeholder.com/300x200?text=Art+Gallery',
-    category: 'Art',
+    category: '🎨 Art',
   },
   {
     id: 'event3',
@@ -30,7 +30,7 @@ export const mockEvents = [
     time: '11:00 AM - 8:00 PM',
     location: 'Market Square',
     image: 'https://via.placeholder.com/300x200?text=Food+Trucks',
-    category: 'Food',
+    category: '🍕 Food',
   },
   {
     id: 'event4',
@@ -41,7 +41,7 @@ export const mockEvents = [
     time: '8:00 PM - 11:00 PM',
     location: 'Riverside Park',
     image: 'https://via.placeholder.com/300x200?text=Movie+Night',
-    category: 'Entertainment',
+    category: '🎬 Entertainment',
   },
   {
     id: 'event5',
@@ -52,6 +52,6 @@ export const mockEvents = [
     time: '8:00 AM - 2:00 PM',
     location: 'Town Square',
     image: 'https://via.placeholder.com/300x200?text=Farmers+Market',
-    category: 'Shopping',
+    category: '🛍️ Shopping',
   },
 ];
