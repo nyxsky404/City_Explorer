@@ -12,6 +12,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
+import { PersonalizationProvider } from './src/context/PersonalizationContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -86,10 +87,12 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        <NavigationContainer>
-          <RootNavigator />
-          <StatusBar style="auto" />
-        </NavigationContainer>
+        <PersonalizationProvider>
+          <NavigationContainer>
+            <RootNavigator />
+            <StatusBar style="auto" />
+          </NavigationContainer>
+        </PersonalizationProvider>
       </AuthProvider>
     </SafeAreaProvider>
   );
