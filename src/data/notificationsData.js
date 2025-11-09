@@ -1,0 +1,82 @@
+// Mock notifications data
+export const mockNotifications = [
+    {
+        id: 'notif1',
+        type: 'event_reminder',
+        title: 'Event Reminder',
+        message: 'Summer Music Festival starts in 1 hour at Central Park',
+        timestamp: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
+        read: false,
+        relatedId: 'event1',
+        relatedType: 'event',
+        icon: '📅',
+    },
+    {
+        id: 'notif2',
+        type: 'special_offer',
+        title: 'Special Offer!',
+        message: "Mario's Italian Kitchen: 20% off all pasta dishes this weekend!",
+        timestamp: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
+        read: false,
+        relatedId: 'food1',
+        relatedType: 'food',
+        icon: '🎉',
+    },
+    {
+        id: 'notif3',
+        type: 'new_addition',
+        title: 'New Restaurant Nearby!',
+        message: 'Check out Sakura Sushi Bar at 456 Oak Avenue',
+        timestamp: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
+        read: true,
+        relatedId: 'food2',
+        relatedType: 'food',
+        icon: '🍽️',
+    },
+    {
+        id: 'notif4',
+        type: 'new_addition',
+        title: 'New Event Nearby!',
+        message: 'Check out Art Gallery Opening at Downtown Art Gallery',
+        timestamp: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
+        read: true,
+        relatedId: 'event2',
+        relatedType: 'event',
+        icon: '🎪',
+    },
+    {
+        id: 'notif5',
+        type: 'event_reminder',
+        title: 'Event Reminder',
+        message: 'Food Truck Rally starts in 30 minutes at Market Square',
+        timestamp: new Date(Date.now() - 259200000).toISOString(), // 3 days ago
+        read: true,
+        relatedId: 'event3',
+        relatedType: 'event',
+        icon: '📅',
+    },
+];
+
+/**
+ * Get notification type configuration
+ */
+export const notificationTypes = {
+    event_reminder: {
+        label: 'Event Reminders',
+        description: 'Get notified before events start',
+        icon: '📅',
+        color: '#007AFF',
+    },
+    special_offer: {
+        label: 'Special Offers',
+        description: 'Receive notifications about deals and promotions',
+        icon: '🎉',
+        color: '#FF9500',
+    },
+    new_addition: {
+        label: 'New Additions Nearby',
+        description: 'Be the first to know about new events and restaurants',
+        icon: '✨',
+        color: '#34C759',
+    },
+};
