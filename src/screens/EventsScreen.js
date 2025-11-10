@@ -39,7 +39,7 @@ const EventsScreen = ({ navigation }) => {
     trackViewedItem(item);
     // Navigate to detail screen if available
     if (navigation) {
-      // navigation.navigate('EventDetail', { eventId: item.id });
+      navigation.navigate('EventDetail', { event: item });
       console.log('Navigate to event detail:', item.id);
     }
   };

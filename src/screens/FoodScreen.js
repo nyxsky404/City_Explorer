@@ -39,7 +39,7 @@ const FoodScreen = ({ navigation }) => {
     trackViewedItem(item);
     // Navigate to detail screen if available, or just log for now
     if (navigation) {
-      // navigation.navigate('FoodDetail', { foodId: item.id });
+      navigation.navigate('FoodDetail', { restaurant: item });
       console.log('Navigate to food detail:', item.id);
     }
   };

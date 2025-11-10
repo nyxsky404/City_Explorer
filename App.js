@@ -14,6 +14,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { PersonalizationProvider } from './src/context/PersonalizationContext';
 
+import EventDetailScreen from './src/screens/EventDetailScreen';
+import FoodDetailScreen from './src/screens/FoodDetailScreen';
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -27,27 +30,45 @@ const AuthStack = () => {
   );
 };
 
+// Events Stack
+const EventsStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="EventsList" component={EventsScreen} />
+      <Stack.Screen name="EventDetail" component={EventDetailScreen} />
+    </Stack.Navigator>
+  );
+};
+
+// Food Stack
+const FoodStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="FoodList" component={FoodScreen} />
+      <Stack.Screen name="FoodDetail" component={FoodDetailScreen} />
+    </Stack.Navigator>
+  );
+};
+
 // Main App Tab Navigator
 const MainTabs = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
-        name="Events"
-        component={EventsScreen}
+        name="EventsTab"
+        component={EventsStack}
         options={{
           title: 'Events',
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar-number-outline" size={size} color={color} />
           ),
         }}
       />
       <Tab.Screen
-        name="Food"
-        component={FoodScreen}
+        name="FoodTab"
+        component={FoodStack}
         options={{
           title: 'Food',
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="fast-food-outline" size={size} color={color} />
           ),
@@ -58,7 +79,6 @@ const MainTabs = () => {
         component={SavedScreen}
         options={{
           title: 'Profile',
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           ),
