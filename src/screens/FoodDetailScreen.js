@@ -1,18 +1,72 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     ScrollView,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { openMapsWithDirections } from '../utils/mapUtils';
+import {
+    getReviews,
+    addReview,
+    getPhotos,
+    addPhoto,
+    getCheckInCount,
+    hasUserCheckedIn,
+    addCheckIn,
+    calculateAverageRating
+} from '../utils/socialService';
+import ReviewCard from '../components/ReviewCard';
+import PhotoGallery from '../components/PhotoGallery';
+import SocialActions from '../components/SocialActions';
+import AddReviewModal from '../components/AddReviewModal';
+import PhotoUploadModal from '../components/PhotoUploadModal';
 
 const FoodDetailScreen = ({ route, navigation }) => {
     const { restaurant } = route.params;
+    const [reviews, setReviews] = useState(restaurant.reviews || []);
+    const [photos, setPhotos] = useState(restaurant.photos || []);
+    const [checkInCount, setCheckInCount] = useState(restaurant.checkIns || 0);
+    const [isCheckedIn, setIsCheckedIn] = useState(false);
+    const [averageRating, setAverageRating] = useState(restaurant.rating || 0);
+
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [showPhotoModal, setShowPhotoModal] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Load social data on mount
+    useEffect(() => {
+        loadSocialData();
+    }, []);
+
+    const loadSocialData = async () => {
+        const storedReviews = await getReviews(restaurant.id);
+        if (storedReviews.length > 0) {
+            setReviews([...(restaurant.reviews || []), ...storedReviews]);
+            // Recalculate average rating
+            const allReviews = [...(restaurant.reviews || []), ...storedReviews];
+            setAverageRating(calculateAverageRating(allReviews));
+        }
+
+        const storedPhotos = await getPhotos(restaurant.id);
+        if (storedPhotos.length > 0) {
+            setPhotos([...(restaurant.photos || []), ...storedPhotos]);
+        }
+
+        const storedCheckIns = await getCheckInCount(restaurant.id);
+        if (storedCheckIns > 0) {
+            setCheckInCount((restaurant.checkIns || 0) + storedCheckIns);
+        }
+
+        // Check if current user checked in (using a mock user ID for now)
+        const checkedIn = await hasUserCheckedIn(restaurant.id, 'current-user-id');
+        setIsCheckedIn(checkedIn);
+    };
 
     const handleGetDirections = (mode) => {
         openMapsWithDirections(
@@ -21,6 +75,50 @@ const FoodDetailScreen = ({ route, navigation }) => {
             restaurant.title,
             mode
         );
+    };
+
+    const handleCheckIn = async () => {
+        const result = await addCheckIn(restaurant.id, 'current-user-id', 'You');
+        if (result.success) {
+            setCheckInCount(prev => prev + 1);
+            setIsCheckedIn(true);
+            Alert.alert('Success', 'You have successfully checked in!');
+        } else {
+            Alert.alert('Error', result.error);
+        }
+    };
+
+    const handleAddReview = async (reviewData) => {
+        setIsSubmitting(true);
+        const result = await addReview(restaurant.id, {
+            ...reviewData,
+            userName: 'You', // In a real app, get from auth context
+        });
+
+        if (result.success) {
+            const newReviews = [result.review, ...reviews];
+            setReviews(newReviews);
+            setAverageRating(calculateAverageRating(newReviews));
+            setShowReviewModal(false);
+            Alert.alert('Success', 'Your review has been posted!');
+        } else {
+            Alert.alert('Error', 'Failed to post review');
+        }
+        setIsSubmitting(false);
+    };
+
+    const handleAddPhoto = async (photoUri) => {
+        setIsSubmitting(true);
+        const result = await addPhoto(restaurant.id, photoUri, 'You');
+
+        if (result.success) {
+            setPhotos([result.photo, ...photos]);
+            setShowPhotoModal(false);
+            Alert.alert('Success', 'Photo uploaded successfully!');
+        } else {
+            Alert.alert('Error', 'Failed to upload photo');
+        }
+        setIsSubmitting(false);
     };
 
     return (
@@ -42,7 +140,8 @@ const FoodDetailScreen = ({ route, navigation }) => {
                 <View style={styles.content}>
                     <Text style={styles.title}>{restaurant.title}</Text>
                     <View style={styles.ratingRow}>
-                        <Text style={styles.rating}>⭐ {restaurant.rating}</Text>
+                        <Ionicons name="star" size={18} color="#FFD700" />
+                        <Text style={styles.rating}>{averageRating} ({reviews.length} reviews)</Text>
                         <Text style={styles.priceRange}>{restaurant.priceRange}</Text>
                     </View>
 
@@ -60,6 +159,23 @@ const FoodDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.infoText}>{restaurant.hours}</Text>
                         </View>
                     </View>
+
+                    {/* Social Actions */}
+                    <SocialActions
+                        onCheckIn={handleCheckIn}
+                        onAddPhoto={() => setShowPhotoModal(true)}
+                        onAddReview={() => setShowReviewModal(true)}
+                        checkInCount={checkInCount}
+                        isCheckedIn={isCheckedIn}
+                        itemTitle={restaurant.title}
+                    />
+
+                    {/* Photo Gallery */}
+                    {photos.length > 0 && (
+                        <View style={styles.section}>
+                            <PhotoGallery photos={photos} />
+                        </View>
+                    )}
 
                     <View style={styles.descriptionSection}>
                         <Text style={styles.sectionTitle}>About</Text>
@@ -109,8 +225,34 @@ const FoodDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.directionButtonText}>Driving Directions</Text>
                         </TouchableOpacity>
                     </View>
+
+                    {/* Reviews Section */}
+                    <View style={styles.reviewsSection}>
+                        <Text style={styles.sectionTitle}>Reviews</Text>
+                        {reviews.length > 0 ? (
+                            reviews.map(review => (
+                                <ReviewCard key={review.id} review={review} />
+                            ))
+                        ) : (
+                            <Text style={styles.noReviewsText}>No reviews yet. Be the first to review!</Text>
+                        )}
+                    </View>
                 </View>
             </ScrollView>
+
+            <AddReviewModal
+                visible={showReviewModal}
+                onClose={() => setShowReviewModal(false)}
+                onSubmit={handleAddReview}
+                isSubmitting={isSubmitting}
+            />
+
+            <PhotoUploadModal
+                visible={showPhotoModal}
+                onClose={() => setShowPhotoModal(false)}
+                onUpload={handleAddPhoto}
+                isUploading={isSubmitting}
+            />
         </SafeAreaView>
     );
 };
@@ -184,6 +326,9 @@ const styles = StyleSheet.create({
         color: '#333',
         marginLeft: 12,
     },
+    section: {
+        marginBottom: 20,
+    },
     descriptionSection: {
         marginBottom: 20,
     },
@@ -209,7 +354,7 @@ const styles = StyleSheet.create({
     },
     directionsSection: {
         gap: 12,
-        marginBottom: 20,
+        marginBottom: 30,
     },
     directionButton: {
         flexDirection: 'row',
@@ -227,6 +372,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
         color: '#fff',
+    },
+    reviewsSection: {
+        marginBottom: 40,
+    },
+    noReviewsText: {
+        fontSize: 16,
+        color: '#999',
+        fontStyle: 'italic',
+        textAlign: 'center',
+        marginTop: 10,
     },
 });
 
