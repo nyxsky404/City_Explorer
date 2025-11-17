@@ -14,29 +14,23 @@ import { openMapsWithDirections } from '../utils/mapUtils';
 import {
     getReviews,
     addReview,
-    getPhotos,
-    addPhoto,
     getCheckInCount,
     hasUserCheckedIn,
     addCheckIn,
     calculateAverageRating
 } from '../utils/socialService';
 import ReviewCard from '../components/ReviewCard';
-import PhotoGallery from '../components/PhotoGallery';
 import SocialActions from '../components/SocialActions';
 import AddReviewModal from '../components/AddReviewModal';
-import PhotoUploadModal from '../components/PhotoUploadModal';
 
 const FoodDetailScreen = ({ route, navigation }) => {
     const { restaurant } = route.params;
     const [reviews, setReviews] = useState(restaurant.reviews || []);
-    const [photos, setPhotos] = useState(restaurant.photos || []);
     const [checkInCount, setCheckInCount] = useState(restaurant.checkIns || 0);
     const [isCheckedIn, setIsCheckedIn] = useState(false);
     const [averageRating, setAverageRating] = useState(restaurant.rating || 0);
 
     const [showReviewModal, setShowReviewModal] = useState(false);
-    const [showPhotoModal, setShowPhotoModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Load social data on mount
@@ -53,10 +47,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
             setAverageRating(calculateAverageRating(allReviews));
         }
 
-        const storedPhotos = await getPhotos(restaurant.id);
-        if (storedPhotos.length > 0) {
-            setPhotos([...(restaurant.photos || []), ...storedPhotos]);
-        }
+
 
         const storedCheckIns = await getCheckInCount(restaurant.id);
         if (storedCheckIns > 0) {
@@ -107,19 +98,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
         setIsSubmitting(false);
     };
 
-    const handleAddPhoto = async (photoUri) => {
-        setIsSubmitting(true);
-        const result = await addPhoto(restaurant.id, photoUri, 'You');
 
-        if (result.success) {
-            setPhotos([result.photo, ...photos]);
-            setShowPhotoModal(false);
-            Alert.alert('Success', 'Photo uploaded successfully!');
-        } else {
-            Alert.alert('Error', 'Failed to upload photo');
-        }
-        setIsSubmitting(false);
-    };
 
     return (
         <SafeAreaView style={styles.container} edges={['bottom']}>
@@ -163,19 +142,13 @@ const FoodDetailScreen = ({ route, navigation }) => {
                     {/* Social Actions */}
                     <SocialActions
                         onCheckIn={handleCheckIn}
-                        onAddPhoto={() => setShowPhotoModal(true)}
                         onAddReview={() => setShowReviewModal(true)}
                         checkInCount={checkInCount}
                         isCheckedIn={isCheckedIn}
                         itemTitle={restaurant.title}
                     />
 
-                    {/* Photo Gallery */}
-                    {photos.length > 0 && (
-                        <View style={styles.section}>
-                            <PhotoGallery photos={photos} />
-                        </View>
-                    )}
+
 
                     <View style={styles.descriptionSection}>
                         <Text style={styles.sectionTitle}>About</Text>
@@ -247,12 +220,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
                 isSubmitting={isSubmitting}
             />
 
-            <PhotoUploadModal
-                visible={showPhotoModal}
-                onClose={() => setShowPhotoModal(false)}
-                onUpload={handleAddPhoto}
-                isUploading={isSubmitting}
-            />
+
         </SafeAreaView>
     );
 };

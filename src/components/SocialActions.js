@@ -43,10 +43,7 @@ const SocialActions = ({
             </TouchableOpacity>
 
             <View style={styles.iconRow}>
-                <TouchableOpacity style={styles.iconButton} onPress={onAddPhoto}>
-                    <Ionicons name="camera-outline" size={24} color="#333" />
-                    <Text style={styles.iconText}>Add Photo</Text>
-                </TouchableOpacity>
+
 
                 <TouchableOpacity style={styles.iconButton} onPress={onAddReview}>
                     <Ionicons name="create-outline" size={24} color="#333" />
