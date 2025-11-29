@@ -1,16 +1,37 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { mockFood } from '../data/foodData.js';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
-import ForYouSection from '../components/ForYouSection';
-import { usePersonalization } from '../context/PersonalizationContext';
+import FilterModal from '../components/FilterModal';
 
 const FoodScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const { trackViewedItem } = usePersonalization();
+  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
+  const [activeFilters, setActiveFilters] = useState({
+    priceRanges: [],
+    dietary: [],
+    accessibility: []
+  });
+
+  const handleFilterPress = () => {
+    setIsFilterModalVisible(true);
+  };
+
+  const handleApplyFilters = (newFilters) => {
+    setActiveFilters(newFilters);
+  };
+
+  const getActiveFilterCount = () => {
+    let count = 0;
+    if (activeFilters.priceRanges?.length > 0) count += activeFilters.priceRanges.length;
+    if (activeFilters.dietary?.length > 0) count += activeFilters.dietary.length;
+    if (activeFilters.accessibility?.length > 0) count += activeFilters.accessibility.length;
+    return count;
+  };
+
 
 
   const categories = useMemo(() => {
@@ -40,13 +61,22 @@ const FoodScreen = ({ navigation }) => {
 
       const matchesCategory = !selectedCategory || item.cuisine.includes(selectedCategory);
 
-      return matchesSearch && matchesCategory;
+      const matchesPrice = activeFilters.priceRanges.length === 0 ||
+        activeFilters.priceRanges.includes(item.priceRange);
+
+      // Mock data might not have dietary/accessibility fields populated for all items
+      // For now, we'll assume true if data is missing to avoid empty lists
+      const matchesDietary = activeFilters.dietary.length === 0 ||
+        (item.dietary && activeFilters.dietary.some(filter => item.dietary.includes(filter)));
+
+      const matchesAccess = true; // Placeholder for accessibility check
+
+      return matchesSearch && matchesCategory && matchesPrice && matchesDietary && matchesAccess;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, activeFilters]);
 
   const handleItemPress = (item) => {
-    trackViewedItem(item);
-    trackViewedItem(item);
+
     if (navigation) {
       navigation.navigate('FoodDetail', { restaurant: item });
       console.log('Navigate to food detail:', item.id);
@@ -88,7 +118,8 @@ const FoodScreen = ({ navigation }) => {
         searchText={searchQuery}
         onSearchChange={setSearchQuery}
         placeholder="Search restaurants, cuisines..."
-        onFilterPress={() => { }}
+        onFilterPress={handleFilterPress}
+        filterCount={getActiveFilterCount()}
       />
 
       <CategoryFilter
@@ -105,19 +136,21 @@ const FoodScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.foodList}
         ListHeaderComponent={
-          !searchQuery && !selectedCategory ? (
-            <ForYouSection
-              allItems={mockFood}
-              itemType="food"
-              onItemPress={handleItemPress}
-            />
-          ) : null
+          !searchQuery && !selectedCategory ? null : null
         }
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Text style={styles.emptyStateText}>No restaurants found matching your criteria</Text>
           </View>
         }
+      />
+
+      <FilterModal
+        visible={isFilterModalVisible}
+        onClose={() => setIsFilterModalVisible(false)}
+        filters={activeFilters}
+        onApply={handleApplyFilters}
+        type="food"
       />
     </SafeAreaView>
   );

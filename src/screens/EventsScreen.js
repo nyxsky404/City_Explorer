@@ -4,13 +4,32 @@ import { mockEvents } from '../data/eventsData';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
-import ForYouSection from '../components/ForYouSection';
-import { usePersonalization } from '../context/PersonalizationContext';
+import FilterModal from '../components/FilterModal';
 
 const EventsScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const { trackViewedItem } = usePersonalization();
+  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
+  const [activeFilters, setActiveFilters] = useState({
+    priceRanges: [],
+    accessibility: []
+  });
+
+  const handleFilterPress = () => {
+    setIsFilterModalVisible(true);
+  };
+
+  const handleApplyFilters = (newFilters) => {
+    setActiveFilters(newFilters);
+  };
+
+  const getActiveFilterCount = () => {
+    let count = 0;
+    if (activeFilters.priceRanges?.length > 0) count += activeFilters.priceRanges.length;
+    if (activeFilters.accessibility?.length > 0) count += activeFilters.accessibility.length;
+    return count;
+  };
+
 
 
   const categories = useMemo(() => {
@@ -41,13 +60,23 @@ const EventsScreen = ({ navigation }) => {
 
       const matchesCategory = !selectedCategory || item.category.includes(selectedCategory);
 
-      return matchesSearch && matchesCategory;
+      const matchesPrice = activeFilters.priceRanges.length === 0 ||
+        (item.price === 0 && activeFilters.priceRanges.includes('Free')) ||
+        (item.price > 0 && item.price < 20 && activeFilters.priceRanges.includes('$')) ||
+        (item.price >= 20 && item.price <= 50 && activeFilters.priceRanges.includes('$$')) ||
+        (item.price > 50 && activeFilters.priceRanges.includes('$$$'));
+
+      // Note: Mock data might not have accessibility fields, so we'll skip strict checking for now
+      // or assume true if no specific accessibility data exists to avoid filtering everything out.
+      // If data existed: const matchesAccess = activeFilters.accessibility.every(filter => item.features?.includes(filter));
+      const matchesAccess = true;
+
+      return matchesSearch && matchesCategory && matchesPrice && matchesAccess;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, activeFilters]);
 
   const handleItemPress = (item) => {
-    trackViewedItem(item);
-    trackViewedItem(item);
+
     if (navigation) {
       navigation.navigate('EventDetail', { event: item });
       console.log('Navigate to event detail:', item.id);
@@ -88,7 +117,8 @@ const EventsScreen = ({ navigation }) => {
         searchText={searchQuery}
         onSearchChange={setSearchQuery}
         placeholder="Search events, categories..."
-        onFilterPress={() => { }}
+        onFilterPress={handleFilterPress}
+        filterCount={getActiveFilterCount()}
       />
 
       <CategoryFilter
@@ -105,19 +135,21 @@ const EventsScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.foodList}
         ListHeaderComponent={
-          !searchQuery && !selectedCategory ? (
-            <ForYouSection
-              allItems={mockEvents}
-              itemType="events"
-              onItemPress={handleItemPress}
-            />
-          ) : null
+          !searchQuery && !selectedCategory ? null : null
         }
         ListEmptyComponent={
           <View style={styles.emptyState}>
             <Text style={styles.emptyStateText}>No events found matching your criteria</Text>
           </View>
         }
+      />
+
+      <FilterModal
+        visible={isFilterModalVisible}
+        onClose={() => setIsFilterModalVisible(false)}
+        filters={activeFilters}
+        onApply={handleApplyFilters}
+        type="event"
       />
     </SafeAreaView>
   );

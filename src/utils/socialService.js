@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const REVIEWS_KEY = '@city_explorer_reviews';
-const PHOTOS_KEY = '@city_explorer_photos';
+
 const CHECKINS_KEY = '@city_explorer_checkins';
 
 
@@ -54,61 +54,7 @@ export const calculateAverageRating = (reviews) => {
 
 
 
-export const getPhotos = async (itemId) => {
-    try {
-        const photosJson = await AsyncStorage.getItem(PHOTOS_KEY);
-        const allPhotos = photosJson ? JSON.parse(photosJson) : {};
-        return allPhotos[itemId] || [];
-    } catch (error) {
-        console.error('Error getting photos:', error);
-        return [];
-    }
-};
 
-
-export const addPhoto = async (itemId, photoUri, userName = 'Anonymous') => {
-    try {
-        const photosJson = await AsyncStorage.getItem(PHOTOS_KEY);
-        const allPhotos = photosJson ? JSON.parse(photosJson) : {};
-
-        if (!allPhotos[itemId]) {
-            allPhotos[itemId] = [];
-        }
-
-        const newPhoto = {
-            id: Date.now().toString(),
-            uri: photoUri,
-            userName,
-            date: new Date().toISOString(),
-        };
-
-        allPhotos[itemId].unshift(newPhoto);
-        await AsyncStorage.setItem(PHOTOS_KEY, JSON.stringify(allPhotos));
-
-        return { success: true, photo: newPhoto };
-    } catch (error) {
-        console.error('Error adding photo:', error);
-        return { success: false, error: error.message };
-    }
-};
-
-
-export const deletePhoto = async (itemId, photoId) => {
-    try {
-        const photosJson = await AsyncStorage.getItem(PHOTOS_KEY);
-        const allPhotos = photosJson ? JSON.parse(photosJson) : {};
-
-        if (allPhotos[itemId]) {
-            allPhotos[itemId] = allPhotos[itemId].filter(photo => photo.id !== photoId);
-            await AsyncStorage.setItem(PHOTOS_KEY, JSON.stringify(allPhotos));
-        }
-
-        return { success: true };
-    } catch (error) {
-        console.error('Error deleting photo:', error);
-        return { success: false, error: error.message };
-    }
-};
 
 
 

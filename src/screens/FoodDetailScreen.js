@@ -22,6 +22,7 @@ import {
 import ReviewCard from '../components/ReviewCard';
 import SocialActions from '../components/SocialActions';
 import AddReviewModal from '../components/AddReviewModal';
+import { useSaved } from '../context/SavedContext';
 
 const FoodDetailScreen = ({ route, navigation }) => {
     const { restaurant } = route.params;
@@ -32,6 +33,17 @@ const FoodDetailScreen = ({ route, navigation }) => {
 
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { isSaved, saveItem, unsaveItem } = useSaved();
+    const saved = isSaved(restaurant.id);
+
+    const handleToggleSave = async () => {
+        if (saved) {
+            await unsaveItem(restaurant.id);
+        } else {
+            await saveItem(restaurant, 'food');
+        }
+    };
 
 
     useEffect(() => {
@@ -111,7 +123,13 @@ const FoodDetailScreen = ({ route, navigation }) => {
                         <Ionicons name="arrow-back" size={24} color="#333" />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Restaurant Details</Text>
-                    <View style={styles.placeholder} />
+                    <TouchableOpacity onPress={handleToggleSave}>
+                        <Ionicons
+                            name={saved ? "bookmark" : "bookmark-outline"}
+                            size={24}
+                            color={saved ? "#007AFF" : "#333"}
+                        />
+                    </TouchableOpacity>
                 </View>
 
 

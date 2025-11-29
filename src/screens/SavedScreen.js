@@ -1,11 +1,27 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
+import { useSaved } from '../context/SavedContext';
 import { Ionicons } from '@expo/vector-icons';
+import { mockEvents } from '../data/eventsData';
+import { mockFood } from '../data/foodData';
 
-const SavedScreen = () => {
+const SavedScreen = ({ navigation }) => {
   const { user, logout } = useAuth();
+  const { savedItems } = useSaved();
+
+  const savedData = useMemo(() => {
+    return savedItems.map(savedItem => {
+      if (savedItem.type === 'event') {
+        const event = mockEvents.find(e => e.id === savedItem.id);
+        return event ? { ...event, type: 'event' } : null;
+      } else {
+        const food = mockFood.find(f => f.id === savedItem.id);
+        return food ? { ...food, type: 'food' } : null;
+      }
+    }).filter(item => item !== null);
+  }, [savedItems]);
 
   const handleLogout = () => {
     Alert.alert(
@@ -27,6 +43,40 @@ const SavedScreen = () => {
     );
   };
 
+  const handleItemPress = (item) => {
+    if (item.type === 'event') {
+      navigation.navigate('EventsTab', {
+        screen: 'EventDetail',
+        params: { event: item }
+      });
+    } else {
+      navigation.navigate('FoodTab', {
+        screen: 'FoodDetail',
+        params: { restaurant: item }
+      });
+    }
+  };
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => handleItemPress(item)}
+    >
+      <View style={styles.cardHeader}>
+        <Text style={styles.cardTitle}>{item.title}</Text>
+        <Ionicons
+          name={item.type === 'event' ? 'calendar' : 'restaurant'}
+          size={16}
+          color="#666"
+        />
+      </View>
+      <Text style={styles.cardSubtitle}>
+        {item.type === 'event' ? item.date : item.cuisine}
+      </Text>
+      <Text style={styles.cardLocation}>📍 {item.location}</Text>
+    </TouchableOpacity>
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -35,8 +85,7 @@ const SavedScreen = () => {
       </View>
 
       <View style={styles.content}>
-
-        <View style={styles.card}>
+        <View style={styles.profileCard}>
           <View style={styles.avatarContainer}>
             <View style={styles.avatar}>
               <Ionicons name="person" size={40} color="#007AFF" />
@@ -47,22 +96,29 @@ const SavedScreen = () => {
             <Text style={styles.userName}>{user?.name || 'User'}</Text>
             <Text style={styles.userEmail}>{user?.email || 'email@example.com'}</Text>
           </View>
-        </View>
 
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+            <Ionicons name="log-out-outline" size={20} color="#FF3B30" />
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Saved Items</Text>
-          <View style={styles.savedCard}>
-            <Ionicons name="bookmark-outline" size={24} color="#666" />
-            <Text style={styles.savedText}>Your bookmarked items will appear here</Text>
-          </View>
+          <Text style={styles.sectionTitle}>Saved Items ({savedData.length})</Text>
+          {savedData.length > 0 ? (
+            <FlatList
+              data={savedData}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.listContent}
+            />
+          ) : (
+            <View style={styles.emptyState}>
+              <Ionicons name="bookmark-outline" size={48} color="#ccc" />
+              <Text style={styles.emptyText}>No saved items yet</Text>
+            </View>
+          )}
         </View>
-
-
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Ionicons name="log-out-outline" size={20} color="#FF3B30" />
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -76,6 +132,7 @@ const styles = StyleSheet.create({
   header: {
     padding: 20,
     backgroundColor: 'white',
+    paddingBottom: 10,
   },
   heading: {
     color: '#333333',
@@ -91,43 +148,46 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
-  card: {
+  profileCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: 'white',
     borderRadius: 12,
-    padding: 20,
-    marginBottom: 20,
+    padding: 16,
+    marginBottom: 24,
     shadowColor: 'black',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   avatarContainer: {
-    alignItems: 'center',
-    marginBottom: 16,
+    marginRight: 16,
   },
   avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
     backgroundColor: '#E8F4FF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   userInfo: {
-    alignItems: 'center',
+    flex: 1,
   },
   userName: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 4,
   },
   userEmail: {
     fontSize: 14,
     color: '#666',
   },
+  logoutButton: {
+    padding: 8,
+  },
   section: {
-    marginBottom: 20,
+    flex: 1,
   },
   sectionTitle: {
     fontSize: 18,
@@ -135,38 +195,49 @@ const styles = StyleSheet.create({
     color: '#333',
     marginBottom: 12,
   },
-  savedCard: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 30,
-    alignItems: 'center',
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+  listContent: {
+    paddingBottom: 20,
   },
-  savedText: {
-    fontSize: 14,
-    color: '#999',
-    marginTop: 12,
-    textAlign: 'center',
-  },
-  logoutButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  card: {
     backgroundColor: 'white',
     borderRadius: 12,
     padding: 16,
-    borderWidth: 1,
-    borderColor: '#FF3B30',
-    marginTop: 'auto',
+    marginBottom: 12,
+    shadowColor: 'black',
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
-  logoutText: {
-    color: '#FF3B30',
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  cardTitle: {
     fontSize: 16,
     fontWeight: '600',
-    marginLeft: 8,
+    color: '#333',
+  },
+  cardSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
+  },
+  cardLocation: {
+    fontSize: 13,
+    color: '#888',
+  },
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 40,
+  },
+  emptyText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#999',
   },
 });
 

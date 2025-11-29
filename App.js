@@ -12,7 +12,8 @@ import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
-import { PersonalizationProvider } from './src/context/PersonalizationContext';
+import { SavedProvider } from './src/context/SavedContext';
+
 
 import EventDetailScreen from './src/screens/EventDetailScreen';
 import FoodDetailScreen from './src/screens/FoodDetailScreen';
@@ -107,12 +108,12 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        <PersonalizationProvider>
+        <SavedProvider>
           <NavigationContainer>
             <RootNavigator />
             <StatusBar style="auto" />
           </NavigationContainer>
-        </PersonalizationProvider>
+        </SavedProvider>
       </AuthProvider>
     </SafeAreaProvider>
   );

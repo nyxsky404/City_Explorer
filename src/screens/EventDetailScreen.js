@@ -22,6 +22,7 @@ import {
 import ReviewCard from '../components/ReviewCard';
 import SocialActions from '../components/SocialActions';
 import AddReviewModal from '../components/AddReviewModal';
+import { useSaved } from '../context/SavedContext';
 
 const EventDetailScreen = ({ route, navigation }) => {
     const { event } = route.params;
@@ -32,6 +33,17 @@ const EventDetailScreen = ({ route, navigation }) => {
 
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { isSaved, saveItem, unsaveItem } = useSaved();
+    const saved = isSaved(event.id);
+
+    const handleToggleSave = async () => {
+        if (saved) {
+            await unsaveItem(event.id);
+        } else {
+            await saveItem(event, 'event');
+        }
+    };
 
 
     useEffect(() => {
@@ -106,7 +118,13 @@ const EventDetailScreen = ({ route, navigation }) => {
                         <Ionicons name="arrow-back" size={24} color="#333" />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Event Details</Text>
-                    <View style={styles.placeholder} />
+                    <TouchableOpacity onPress={handleToggleSave}>
+                        <Ionicons
+                            name={saved ? "bookmark" : "bookmark-outline"}
+                            size={24}
+                            color={saved ? "#007AFF" : "#333"}
+                        />
+                    </TouchableOpacity>
                 </View>
 
 
