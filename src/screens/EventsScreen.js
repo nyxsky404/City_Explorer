@@ -54,6 +54,14 @@ const EventsScreen = ({ navigation }) => {
 
   const filteredEvents = useMemo(() => {
     return mockEvents.filter(item => {
+      // 0. Filter Past Events
+      const eventDate = new Date(item.date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (eventDate < today) {
+        return false;
+      }
+
       const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.category.toLowerCase().includes(searchQuery.toLowerCase());
@@ -62,9 +70,9 @@ const EventsScreen = ({ navigation }) => {
 
       const matchesPrice = activeFilters.priceRanges.length === 0 ||
         (item.price === 0 && activeFilters.priceRanges.includes('Free')) ||
-        (item.price > 0 && item.price < 20 && activeFilters.priceRanges.includes('$')) ||
-        (item.price >= 20 && item.price <= 50 && activeFilters.priceRanges.includes('$$')) ||
-        (item.price > 50 && activeFilters.priceRanges.includes('$$$'));
+        (item.price > 0 && item.price < 500 && activeFilters.priceRanges.includes('₹')) ||
+        (item.price >= 500 && item.price <= 1500 && activeFilters.priceRanges.includes('₹₹')) ||
+        (item.price > 1500 && activeFilters.priceRanges.includes('₹₹₹'));
 
       // Note: Mock data might not have accessibility fields, so we'll skip strict checking for now
       // or assume true if no specific accessibility data exists to avoid filtering everything out.

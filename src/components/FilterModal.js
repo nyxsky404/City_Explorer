@@ -23,15 +23,15 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
 
     const priceOptions = type === 'food'
         ? [
-            { label: '$ (Under $15)', value: '$' },
-            { label: '$$ ($15-30)', value: '$$' },
-            { label: '$$$ (Over $30)', value: '$$$' },
+            { label: 'Under ₹500', value: 'Under ₹500' },
+            { label: '₹500 - ₹1500', value: '₹500 - ₹1500' },
+            { label: 'Over ₹1500', value: 'Over ₹1500' },
         ]
         : [
             { label: 'Free', value: 'Free' },
-            { label: '$ (Under $20)', value: '$' },
-            { label: '$$ ($20-50)', value: '$$' },
-            { label: '$$$ (Over $50)', value: '$$$' },
+            { label: '₹ (Under ₹500)', value: '₹' },
+            { label: '₹₹ (₹500-1500)', value: '₹₹' },
+            { label: '₹₹₹ (Over ₹1500)', value: '₹₹₹' },
         ];
 
 

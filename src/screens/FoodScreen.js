@@ -96,7 +96,7 @@ const FoodScreen = ({ navigation }) => {
       </View>
 
       <View>
-        <Text style={styles.cuisine}>{item.cuisine}</Text>
+        <Text style={styles.cuisine}>{item.cuisine} • {item.priceRange} • ₹{item.averageCost} for two</Text>
       </View>
 
       <Text style={styles.location}>📍 {item.location}</Text>
