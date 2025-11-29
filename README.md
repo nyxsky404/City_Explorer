@@ -4,6 +4,34 @@
 
 *Featuring a sleek dark mode UI and premium user experience.*
 
+## 📱 Demo
+
+### 🎥 Video Walkthrough
+
+<div align="center">
+  <video src="assets/demo_video.mp4" width="100%" controls></video>
+</div>
+
+### 📸 Screenshots
+
+<div align="center">
+  <img src="assets/photo_2025-11-30 03.25.25.jpeg" width="30%" />
+  <img src="assets/photo_2025-11-30 03.25.21.jpeg" width="30%" />
+  <img src="assets/photo_2025-11-30 03.25.17.jpeg" width="30%" />
+</div>
+<div align="center">
+  <img src="assets/photo_2025-11-30 03.25.11.jpeg" width="30%" />
+  <img src="assets/photo_2025-11-30 03.25.28.jpeg" width="30%" />
+  <img src="assets/photo_2025-11-30 03.25.13.jpeg" width="30%" />
+</div>
+<div align="center">
+  <img src="assets/photo_2025-11-30 03.25.15.jpeg" width="30%" />
+  <img src="assets/photo_2025-11-30 03.25.08.jpeg" width="30%" />
+  <img src="assets/photo_2025-11-30 03.25.23.jpeg" width="30%" />
+</div>
+
+<br/>
+
 Discover the best events and restaurants in your city with this beautiful React Native app built with Expo. Now featuring city-based filtering, social interactions, and a premium user experience.
 
 ## 📱 Features
