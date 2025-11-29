@@ -4,7 +4,7 @@ import {
     getRecentSearches,
     clearRecentSearches,
     getFavoriteCategories,
-    toggleFavoriteCategory as toggleFavoriteCategoryService,
+
     saveViewedItem,
     getViewedItems,
     generateRecommendations,
@@ -64,19 +64,7 @@ export const PersonalizationProvider = ({ children }) => {
     }, []);
 
 
-    const toggleFavoriteCategory = useCallback(async (type, category) => {
-        try {
-            const updated = await toggleFavoriteCategoryService(type, category);
-            setFavoriteCategories(updated);
-        } catch (error) {
-            console.error('Error toggling favorite category:', error);
-        }
-    }, []);
 
-
-    const isFavoriteCategory = useCallback((type, category) => {
-        return favoriteCategories[type]?.includes(category) || false;
-    }, [favoriteCategories]);
 
 
     const trackViewedItem = useCallback(async (item) => {
@@ -130,8 +118,7 @@ export const PersonalizationProvider = ({ children }) => {
                 clearSearchHistory,
 
 
-                toggleFavoriteCategory,
-                isFavoriteCategory,
+
 
 
                 trackViewedItem,

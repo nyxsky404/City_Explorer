@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { usePersonalization } from '../context/PersonalizationContext';
-
 
 const CategoryFilter = ({
     categories,
@@ -10,11 +8,6 @@ const CategoryFilter = ({
     onSelectCategory,
     type
 }) => {
-    const { toggleFavoriteCategory, isFavoriteCategory } = usePersonalization();
-
-    const handleLongPress = (category) => {
-        toggleFavoriteCategory(type, category.value);
-    };
 
     return (
         <View style={styles.container}>
@@ -42,19 +35,15 @@ const CategoryFilter = ({
 
                 {categories.map((category) => {
                     const isSelected = selectedCategory === category.value;
-                    const isFavorite = isFavoriteCategory(type, category.value);
 
                     return (
                         <TouchableOpacity
                             key={category.value}
                             style={[
                                 styles.categoryChip,
-                                isSelected && styles.categoryChipSelected,
-                                isFavorite && styles.categoryChipFavorite
+                                isSelected && styles.categoryChipSelected
                             ]}
                             onPress={() => onSelectCategory(category.value)}
-                            onLongPress={() => handleLongPress(category)}
-                            delayLongPress={500}
                         >
                             {category.icon && (
                                 <Ionicons
@@ -70,20 +59,13 @@ const CategoryFilter = ({
                             ]}>
                                 {category.label}
                             </Text>
-                            {isFavorite && (
-                                <Ionicons
-                                    name="heart"
-                                    size={12}
-                                    color={isSelected ? '#fff' : '#FF6B6B'}
-                                    style={styles.favoriteIcon}
-                                />
-                            )}
+
                         </TouchableOpacity>
                     );
                 })}
             </ScrollView>
 
-            <Text style={styles.hint}>Long press to favorite</Text>
+
         </View>
     );
 };
@@ -111,10 +93,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#007AFF',
         borderColor: '#007AFF',
     },
-    categoryChipFavorite: {
-        borderColor: '#FF6B6B',
-        borderWidth: 2,
-    },
     categoryIcon: {
         marginRight: 6,
     },
@@ -126,16 +104,7 @@ const styles = StyleSheet.create({
     categoryTextSelected: {
         color: '#fff',
     },
-    favoriteIcon: {
-        marginLeft: 4,
-    },
-    hint: {
-        fontSize: 11,
-        color: '#999',
-        textAlign: 'center',
-        marginTop: 4,
-        fontStyle: 'italic',
-    },
+
 });
 
 export default CategoryFilter;

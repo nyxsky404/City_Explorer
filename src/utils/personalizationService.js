@@ -68,26 +68,7 @@ export const getFavoriteCategories = async () => {
     }
 };
 
-export const toggleFavoriteCategory = async (type, category) => {
-    try {
-        const favorites = await getFavoriteCategories();
-        const typeArray = favorites[type] || [];
 
-        const index = typeArray.indexOf(category);
-        if (index > -1) {
-            typeArray.splice(index, 1);
-        } else {
-            typeArray.push(category);
-        }
-
-        favorites[type] = typeArray;
-        await saveFavoriteCategories(favorites);
-        return favorites;
-    } catch (error) {
-        console.error('Error toggling favorite category:', error);
-        return { events: [], food: [] };
-    }
-};
 
 
 export const saveViewedItem = async (item) => {
