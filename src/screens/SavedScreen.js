@@ -6,7 +6,7 @@ import { useSaved } from '../context/SavedContext';
 import { Ionicons } from '@expo/vector-icons';
 import { mockEvents } from '../data/eventsData';
 import { mockFood } from '../data/foodData';
-import { scheduleEventReminder } from '../utils/notificationService';
+
 
 const SavedScreen = ({ navigation }) => {
   const { user, logout } = useAuth();
@@ -58,14 +58,7 @@ const SavedScreen = ({ navigation }) => {
     }
   };
 
-  const handleRemind = async (item) => {
-    const notificationId = await scheduleEventReminder(item);
-    if (notificationId) {
-      Alert.alert('Reminder Set', `You will be reminded 1 hour before ${item.title} starts.`);
-    } else {
-      Alert.alert('Error', 'Failed to schedule reminder. Please check your notification permissions.');
-    }
-  };
+
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -85,15 +78,7 @@ const SavedScreen = ({ navigation }) => {
       </Text>
       <Text style={styles.cardLocation}>📍 {item.location}</Text>
 
-      {item.type === 'event' && (
-        <TouchableOpacity
-          style={styles.remindButton}
-          onPress={() => handleRemind(item)}
-        >
-          <Ionicons name="notifications-outline" size={16} color="#007AFF" />
-          <Text style={styles.remindButtonText}>Remind Me</Text>
-        </TouchableOpacity>
-      )}
+
     </TouchableOpacity>
   );
 
@@ -248,20 +233,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#888',
   },
-  remindButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 8,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
-    gap: 6,
-  },
-  remindButtonText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#007AFF',
-  },
+
   emptyState: {
     flex: 1,
     justifyContent: 'center',

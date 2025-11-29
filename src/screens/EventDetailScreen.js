@@ -19,7 +19,7 @@ import {
     addCheckIn,
     calculateAverageRating
 } from '../utils/socialService';
-import { scheduleEventReminder } from '../utils/notificationService';
+
 import ReviewCard from '../components/ReviewCard';
 import SocialActions from '../components/SocialActions';
 import AddReviewModal from '../components/AddReviewModal';
@@ -46,14 +46,7 @@ const EventDetailScreen = ({ route, navigation }) => {
         }
     };
 
-    const handleRemind = async () => {
-        const notificationId = await scheduleEventReminder(event);
-        if (notificationId) {
-            Alert.alert('Reminder Set', `You will be reminded 1 hour before ${event.title} starts.`);
-        } else {
-            Alert.alert('Error', 'Failed to schedule reminder. Please check your notification permissions.');
-        }
-    };
+
 
 
     useEffect(() => {
@@ -160,10 +153,7 @@ const EventDetailScreen = ({ route, navigation }) => {
                             <Text style={styles.infoText}>{event.location}</Text>
                         </View>
 
-                        <TouchableOpacity style={styles.remindButton} onPress={handleRemind}>
-                            <Ionicons name="notifications-outline" size={20} color="#007AFF" />
-                            <Text style={styles.remindButtonText}>Remind Me</Text>
-                        </TouchableOpacity>
+
                     </View>
 
 
@@ -321,21 +311,7 @@ const styles = StyleSheet.create({
         color: '#333',
         marginLeft: 12,
     },
-    remindButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 16,
-        paddingTop: 16,
-        borderTopWidth: 1,
-        borderTopColor: '#f0f0f0',
-        gap: 8,
-    },
-    remindButtonText: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#007AFF',
-    },
+
     section: {
         marginBottom: 20,
     },

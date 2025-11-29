@@ -13,7 +13,7 @@ import SignupScreen from './src/screens/SignupScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { SavedProvider } from './src/context/SavedContext';
-import { requestNotificationPermissions } from './src/utils/notificationService';
+
 
 
 import EventDetailScreen from './src/screens/EventDetailScreen';
@@ -106,9 +106,7 @@ const RootNavigator = () => {
 };
 
 export default function App() {
-  React.useEffect(() => {
-    requestNotificationPermissions();
-  }, []);
+
 
   return (
     <SafeAreaProvider>
