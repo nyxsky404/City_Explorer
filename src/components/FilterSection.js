@@ -21,7 +21,7 @@ const FilterSection = ({
                 <Ionicons
                     name={expanded ? 'chevron-up' : 'chevron-down'}
                     size={20}
-                    color="#666"
+                    color="#FFFFFF"
                 />
             </TouchableOpacity>
 
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         fontWeight: '600',
-        color: '#333',
+        color: '#FFFFFF',
     },
     optionsContainer: {
         paddingTop: 8,
@@ -81,19 +81,20 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
         borderRadius: 6,
-        borderWidth: 2,
-        borderColor: '#ddd',
+        borderWidth: 1,
+        borderColor: '#333',
         marginRight: 12,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#2C2C2C',
     },
     checkboxSelected: {
-        backgroundColor: '#4CAF50',
-        borderColor: '#4CAF50',
+        backgroundColor: '#266E3F',
+        borderColor: '#266E3F',
     },
     optionText: {
         fontSize: 15,
-        color: '#333',
+        color: '#CCCCCC',
     },
 });
 

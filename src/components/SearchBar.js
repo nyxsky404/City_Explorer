@@ -45,7 +45,7 @@ const SearchBar = ({
                 style={styles.filterButton}
                 onPress={onFilterPress}
             >
-                <Ionicons name="options-outline" size={24} color="#333" />
+                <Ionicons name="options-outline" size={24} color="#FFFFFF" />
                 {filterCount > 0 && (
                     <View style={styles.badge}>
                         <Text style={styles.badgeText}>{filterCount}</Text>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         padding: 16,
-        backgroundColor: 'white',
+        backgroundColor: '#121212',
         alignItems: 'center',
         gap: 12,
         zIndex: 1000,
@@ -72,10 +72,12 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#2C2C2C',
         borderRadius: 12,
         paddingHorizontal: 12,
         height: 44,
+        borderWidth: 1,
+        borderColor: '#333',
     },
     searchIcon: {
         marginRight: 8,
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         fontSize: 16,
-        color: '#333',
+        color: '#FFFFFF',
         paddingVertical: 8,
     },
     clearButton: {
@@ -93,10 +95,11 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 12,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#2C2C2C',
         alignItems: 'center',
         justifyContent: 'center',
-        position: 'relative',
+        borderWidth: 1,
+        borderColor: '#333',
     },
     badge: {
         position: 'absolute',
@@ -115,7 +118,6 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: 'bold',
     },
-
 });
 
 export default SearchBar;

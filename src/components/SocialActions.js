@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 const SocialActions = ({
     onCheckIn,
-    onAddPhoto,
     onAddReview,
     checkInCount,
     isCheckedIn,
@@ -32,7 +31,7 @@ const SocialActions = ({
                 <Ionicons
                     name={isCheckedIn ? "checkmark-circle" : "location-outline"}
                     size={24}
-                    color={isCheckedIn ? "white" : "#007AFF"}
+                    color={isCheckedIn ? "white" : "#FFFFFF"}
                 />
                 <Text style={[styles.actionText, isCheckedIn && styles.activeText]}>
                     {isCheckedIn ? 'Checked In' : 'Check In'}
@@ -46,12 +45,12 @@ const SocialActions = ({
 
 
                 <TouchableOpacity style={styles.iconButton} onPress={onAddReview}>
-                    <Ionicons name="create-outline" size={24} color="#333" />
+                    <Ionicons name="create-outline" size={24} color="#FFFFFF" />
                     <Text style={styles.iconText}>Review</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.iconButton} onPress={handleShare}>
-                    <Ionicons name="share-social-outline" size={24} color="#333" />
+                    <Ionicons name="share-social-outline" size={24} color="#FFFFFF" />
                     <Text style={styles.iconText}>Share</Text>
                 </TouchableOpacity>
             </View>
@@ -61,35 +60,32 @@ const SocialActions = ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#1E1E1E',
         padding: 16,
         borderRadius: 12,
         marginBottom: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
-        elevation: 2,
+        borderWidth: 1,
+        borderColor: '#333',
     },
     actionButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f0f8ff',
+        backgroundColor: '#2C2C2C',
         paddingVertical: 12,
         borderRadius: 8,
         marginBottom: 16,
         borderWidth: 1,
-        borderColor: '#007AFF',
+        borderColor: '#333',
     },
     activeButton: {
-        backgroundColor: '#34C759',
-        borderColor: '#34C759',
+        backgroundColor: '#266E3F',
+        borderColor: '#266E3F',
     },
     actionText: {
         fontSize: 16,
         fontWeight: '600',
-        color: '#007AFF',
+        color: '#FFFFFF',
         marginLeft: 8,
         marginRight: 4,
     },
@@ -98,13 +94,13 @@ const styles = StyleSheet.create({
     },
     countText: {
         fontSize: 14,
-        color: '#007AFF',
+        color: '#AAAAAA',
     },
     iconRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         borderTopWidth: 1,
-        borderTopColor: '#f0f0f0',
+        borderTopColor: '#333',
         paddingTop: 16,
     },
     iconButton: {
@@ -113,7 +109,7 @@ const styles = StyleSheet.create({
     },
     iconText: {
         fontSize: 12,
-        color: '#333',
+        color: '#FFFFFF',
         fontWeight: '500',
     },
 });

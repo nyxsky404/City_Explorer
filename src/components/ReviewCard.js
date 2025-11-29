@@ -44,15 +44,12 @@ const ReviewCard = ({ review }) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#1E1E1E',
         borderRadius: 12,
         padding: 16,
         marginBottom: 12,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 2,
-        elevation: 2,
+        borderWidth: 1,
+        borderColor: '#333',
     },
     header: {
         flexDirection: 'row',
@@ -68,24 +65,26 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        backgroundColor: '#007AFF',
+        backgroundColor: '#2C2C2C',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 12,
+        borderWidth: 1,
+        borderColor: '#333',
     },
     avatarText: {
-        color: 'white',
+        color: '#FFFFFF',
         fontSize: 18,
         fontWeight: 'bold',
     },
     userName: {
         fontSize: 16,
         fontWeight: '600',
-        color: '#333',
+        color: '#FFFFFF',
     },
     date: {
         fontSize: 12,
-        color: '#999',
+        color: '#AAAAAA',
         marginTop: 2,
     },
     rating: {
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
     },
     comment: {
         fontSize: 14,
-        color: '#444',
+        color: '#CCCCCC',
         lineHeight: 20,
     },
 });

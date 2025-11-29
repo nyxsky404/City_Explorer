@@ -93,7 +93,7 @@ const SavedScreen = ({ navigation }) => {
         <View style={styles.profileCard}>
           <View style={styles.avatarContainer}>
             <View style={styles.avatar}>
-              <Ionicons name="person" size={40} color="#007AFF" />
+              <Ionicons name="person" size={30} color="#FFFFFF" />
             </View>
           </View>
 
@@ -132,22 +132,23 @@ const SavedScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#121212',
   },
   header: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#121212',
     paddingBottom: 10,
   },
   heading: {
-    color: '#333333',
-    fontSize: 28,
-    fontWeight: 'bold',
+    color: '#FFFFFF',
+    fontSize: 34,
+    fontWeight: '800',
     marginBottom: 5,
+    letterSpacing: -0.5,
   },
   subheading: {
     fontSize: 16,
-    color: '#666666',
+    color: '#AAAAAA',
   },
   content: {
     flex: 1,
@@ -156,84 +157,84 @@ const styles = StyleSheet.create({
   profileCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 24,
-    shadowColor: 'black',
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    backgroundColor: '#1E1E1E',
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 32,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   avatarContainer: {
     marginRight: 16,
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#E8F4FF',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#2C2C2C',
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#333',
   },
   userInfo: {
     flex: 1,
   },
   userName: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#FFFFFF',
+    marginBottom: 4,
   },
   userEmail: {
     fontSize: 14,
-    color: '#666',
+    color: '#AAAAAA',
   },
   logoutButton: {
     padding: 8,
+    backgroundColor: 'rgba(255, 59, 48, 0.1)',
+    borderRadius: 8,
   },
   section: {
     flex: 1,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 12,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 16,
   },
   listContent: {
     paddingBottom: 20,
   },
   card: {
-    backgroundColor: 'white',
+    backgroundColor: '#1E1E1E',
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    shadowColor: 'black',
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#333',
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 4,
+    marginBottom: 8,
   },
   cardTitle: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   cardSubtitle: {
     fontSize: 14,
-    color: '#666',
+    color: '#AAAAAA',
     marginBottom: 4,
   },
   cardLocation: {
     fontSize: 13,
-    color: '#888',
+    color: '#666',
   },
-
   emptyState: {
     flex: 1,
     justifyContent: 'center',
@@ -243,7 +244,7 @@ const styles = StyleSheet.create({
   emptyText: {
     marginTop: 12,
     fontSize: 16,
-    color: '#999',
+    color: '#666',
   },
 });
 

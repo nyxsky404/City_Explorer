@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { mockEvents } from '../data/eventsData';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../components/SearchBar';
@@ -95,22 +95,27 @@ const EventsScreen = ({ navigation }) => {
     <TouchableOpacity
       style={styles.card}
       onPress={() => handleItemPress(item)}
+      activeOpacity={0.9}
     >
-      <View style={styles.cardHeading}>
-        <Text style={styles.title}>{item.title}</Text>
-        <View>
-          <Text style={styles.category}>{item.category}</Text>
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: item.image }} style={styles.cardImage} />
+        <View style={styles.categoryBadge}>
+          <Text style={styles.categoryBadgeText}>{item.category}</Text>
         </View>
       </View>
 
-      <View>
-        <Text style={styles.dateTime}>{item.date} • {item.time}</Text>
-      </View>
+      <View style={styles.cardContent}>
+        <View style={styles.dateBadge}>
+          <Text style={styles.dateText}>{new Date(item.date).getDate()}</Text>
+          <Text style={styles.monthText}>{new Date(item.date).toLocaleString('default', { month: 'short' }).toUpperCase()}</Text>
+        </View>
 
-      <Text style={styles.location}>📍 {item.location}</Text>
-      <Text style={styles.description} numberOfLines={2}>
-        {item.description}
-      </Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
+          <Text style={styles.location} numberOfLines={1}>{item.location}</Text>
+          <Text style={styles.price}>{item.price === 0 ? 'Free' : `₹${item.price}`}</Text>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 
@@ -166,64 +171,101 @@ const EventsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#121212', // Dark mode background
   },
   header: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#121212',
     paddingBottom: 10,
   },
   heading: {
-    color: '#333333',
-    fontSize: 28,
-    fontWeight: 'bold',
+    color: '#FFFFFF',
+    fontSize: 34,
+    fontWeight: '800',
     marginBottom: 5,
+    letterSpacing: -0.5,
   },
   subheading: {
     fontSize: 16,
-    color: '#666666',
+    color: '#AAAAAA',
   },
   foodList: {
     padding: 16,
     paddingTop: 8,
   },
   card: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    backgroundColor: '#1E1E1E',
+    borderRadius: 16,
+    marginBottom: 24,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#333',
   },
-  cardHeading: {
+  imageContainer: {
+    position: 'relative',
+  },
+  cardImage: {
+    width: '100%',
+    height: 220,
+  },
+  categoryBadge: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backdropFilter: 'blur(10px)', // Note: backdropFilter might not work on all RN versions without extra libs, but rgba is safe
+  },
+  categoryBadgeText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  cardContent: {
+    padding: 16,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
+  },
+  dateBadge: {
+    backgroundColor: '#2C2C2C',
+    borderRadius: 12,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 16,
+    width: 60,
+    height: 60,
+  },
+  dateText: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  monthText: {
+    color: '#FF6B6B',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  textContainer: {
+    flex: 1,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
-  },
-  category: {
-    fontSize: 12
-  },
-  dateTime: {
-    fontSize: 14,
-    color: 'black',
-    marginVertical: 4
+    color: '#FFFFFF',
+    marginBottom: 4,
   },
   location: {
     fontSize: 14,
-    color: '#333',
+    color: '#AAAAAA',
     marginBottom: 4,
   },
-  description: {
+  price: {
     fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
+    color: '#FF6B6B',
+    fontWeight: '600',
   },
   emptyState: {
     padding: 32,

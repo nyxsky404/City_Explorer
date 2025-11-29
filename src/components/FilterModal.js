@@ -111,7 +111,7 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
                             <View style={styles.header}>
                                 <Text style={styles.headerTitle}>Filters</Text>
                                 <TouchableOpacity onPress={onClose}>
-                                    <Ionicons name="close" size={28} color="#333" />
+                                    <Ionicons name="close" size={28} color="#FFFFFF" />
                                 </TouchableOpacity>
                             </View>
 
@@ -179,14 +179,16 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         justifyContent: 'flex-end',
     },
     modalContainer: {
-        backgroundColor: 'white',
+        backgroundColor: '#1E1E1E',
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         maxHeight: '80%',
+        borderWidth: 1,
+        borderColor: '#333',
     },
     header: {
         flexDirection: 'row',
@@ -194,12 +196,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
+        borderBottomColor: '#333',
     },
     headerTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#333',
+        color: '#FFFFFF',
     },
     content: {
         padding: 20,
@@ -209,26 +211,27 @@ const styles = StyleSheet.create({
         padding: 16,
         gap: 12,
         borderTopWidth: 1,
-        borderTopColor: '#f0f0f0',
+        borderTopColor: '#333',
     },
     resetButton: {
         flex: 1,
         paddingVertical: 14,
         borderRadius: 12,
-        borderWidth: 2,
-        borderColor: '#ddd',
+        borderWidth: 1,
+        borderColor: '#333',
         alignItems: 'center',
+        backgroundColor: '#2C2C2C',
     },
     resetButtonText: {
         fontSize: 16,
         fontWeight: '600',
-        color: '#666',
+        color: '#AAAAAA',
     },
     applyButton: {
         flex: 2,
         paddingVertical: 14,
         borderRadius: 12,
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#266E3F',
         alignItems: 'center',
     },
     applyButtonText: {

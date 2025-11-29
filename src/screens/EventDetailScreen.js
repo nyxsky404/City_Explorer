@@ -6,6 +6,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Alert,
+    Image,
 } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -118,20 +119,21 @@ const EventDetailScreen = ({ route, navigation }) => {
                         style={styles.backButton}
                         onPress={() => navigation.goBack()}
                     >
-                        <Ionicons name="arrow-back" size={24} color="#333" />
+                        <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Event Details</Text>
                     <TouchableOpacity onPress={handleToggleSave}>
                         <Ionicons
                             name={saved ? "bookmark" : "bookmark-outline"}
                             size={24}
-                            color={saved ? "#007AFF" : "#333"}
+                            color={saved ? "#007AFF" : "#FFFFFF"}
                         />
                     </TouchableOpacity>
                 </View>
 
 
                 <View style={styles.content}>
+                    <Image source={{ uri: event.image }} style={styles.coverImage} />
                     <Text style={styles.title}>{event.title}</Text>
                     <View style={styles.ratingRow}>
                         <Ionicons name="star" size={18} color="#FFD700" />
@@ -245,7 +247,7 @@ const EventDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#121212',
     },
     scrollView: {
         flex: 1,
@@ -255,92 +257,103 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 16,
-        backgroundColor: 'white',
+        backgroundColor: '#121212',
         borderBottomWidth: 1,
-        borderBottomColor: '#e0e0e0',
+        borderBottomColor: '#333',
     },
     backButton: {
-        padding: 4,
+        padding: 8,
+        backgroundColor: '#2C2C2C',
+        borderRadius: 20,
     },
     headerTitle: {
         fontSize: 18,
         fontWeight: '600',
-        color: '#333',
-    },
-    placeholder: {
-        width: 32,
+        color: '#FFFFFF',
     },
     content: {
         padding: 20,
     },
+    coverImage: {
+        width: '100%',
+        height: 250,
+        borderRadius: 24,
+        marginBottom: 24,
+    },
     title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#333',
+        fontSize: 32,
+        fontWeight: '800',
+        color: '#FFFFFF',
         marginBottom: 8,
+        letterSpacing: -0.5,
     },
     ratingRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 12,
+        marginBottom: 16,
     },
     ratingText: {
         fontSize: 16,
-        color: '#666',
+        color: '#AAAAAA',
         marginLeft: 6,
         fontWeight: '600',
     },
     category: {
         fontSize: 16,
-        color: '#666',
-        marginBottom: 20,
+        color: '#FF6B6B',
+        marginBottom: 24,
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        letterSpacing: 1,
     },
     infoSection: {
-        backgroundColor: 'white',
-        borderRadius: 12,
-        padding: 16,
-        marginBottom: 20,
+        backgroundColor: '#1E1E1E',
+        borderRadius: 16,
+        padding: 20,
+        marginBottom: 24,
+        borderWidth: 1,
+        borderColor: '#333',
     },
     infoRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 12,
+        marginBottom: 16,
     },
     infoText: {
         fontSize: 16,
-        color: '#333',
-        marginLeft: 12,
+        color: '#FFFFFF',
+        marginLeft: 16,
+        flex: 1,
     },
-
     section: {
-        marginBottom: 20,
+        marginBottom: 24,
     },
     descriptionSection: {
-        marginBottom: 20,
+        marginBottom: 24,
     },
     sectionTitle: {
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: 'bold',
-        color: '#333',
-        marginBottom: 12,
+        color: '#FFFFFF',
+        marginBottom: 16,
     },
     description: {
         fontSize: 16,
-        color: '#666',
-        lineHeight: 24,
+        color: '#AAAAAA',
+        lineHeight: 26,
     },
     mapSection: {
-        marginBottom: 20,
+        marginBottom: 24,
     },
     map: {
         width: '100%',
-        height: 200,
-        borderRadius: 12,
+        height: 220,
+        borderRadius: 16,
         overflow: 'hidden',
     },
     directionsSection: {
         gap: 12,
-        marginBottom: 30,
+        marginBottom: 40,
     },
     directionButton: {
         flexDirection: 'row',
@@ -348,7 +361,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#007AFF',
         padding: 16,
-        borderRadius: 12,
+        borderRadius: 16,
         gap: 10,
     },
     drivingButton: {
@@ -364,11 +377,12 @@ const styles = StyleSheet.create({
     },
     noReviewsText: {
         fontSize: 16,
-        color: '#999',
+        color: '#666',
         fontStyle: 'italic',
         textAlign: 'center',
         marginTop: 10,
     },
 });
+
 
 export default EventDetailScreen;

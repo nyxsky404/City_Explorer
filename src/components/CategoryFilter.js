@@ -5,8 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 const CategoryFilter = ({
     categories,
     selectedCategory,
-    onSelectCategory,
-    type
+    onSelectCategory
 }) => {
 
     return (
@@ -49,7 +48,7 @@ const CategoryFilter = ({
                                 <Ionicons
                                     name={category.icon}
                                     size={18}
-                                    color={isSelected ? '#fff' : '#555'}
+                                    color={isSelected ? '#000' : '#AAA'}
                                     style={styles.categoryIcon}
                                 />
                             )}
@@ -72,7 +71,7 @@ const CategoryFilter = ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        backgroundColor: '#121212',
         paddingVertical: 8,
     },
     scrollContent: {
@@ -85,26 +84,26 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 8,
         borderRadius: 20,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#2C2C2C',
         borderWidth: 1,
-        borderColor: '#e0e0e0',
+        borderColor: '#333',
     },
     categoryChipSelected: {
-        backgroundColor: '#007AFF',
-        borderColor: '#007AFF',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#FFFFFF',
     },
     categoryIcon: {
         marginRight: 6,
     },
     categoryText: {
         fontSize: 14,
-        color: '#333',
+        color: '#AAAAAA',
         fontWeight: '500',
     },
     categoryTextSelected: {
-        color: '#fff',
+        color: '#000000',
+        fontWeight: 'bold',
     },
-
 });
 
 export default CategoryFilter;

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { mockFood } from '../data/foodData.js';
 import SearchBar from '../components/SearchBar';
@@ -87,23 +87,27 @@ const FoodScreen = ({ navigation }) => {
     <TouchableOpacity
       style={styles.card}
       onPress={() => handleItemPress(item)}
+      activeOpacity={0.9}
     >
-      <View style={styles.cardHeading}>
-        <Text style={styles.title}>{item.title}</Text>
-        <View>
-          <Text style={styles.rating}>⭐ {item.rating}</Text>
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: item.image }} style={styles.cardImage} />
+        <View style={styles.ratingBadge}>
+          <Text style={styles.ratingText}>{item.rating} ★</Text>
         </View>
       </View>
 
-      <View>
-        <Text style={styles.cuisine}>{item.cuisine} • {item.priceRange} • ₹{item.averageCost} for two</Text>
-      </View>
+      <View style={styles.cardContent}>
+        <View style={styles.textContainer}>
+          <Text style={styles.title} numberOfLines={1}>{item.title}</Text>
+          <Text style={styles.cuisine} numberOfLines={1}>{item.cuisine} • {item.priceRange}</Text>
+          <Text style={styles.location} numberOfLines={1}>{item.location}</Text>
+        </View>
 
-      <Text style={styles.location}>📍 {item.location}</Text>
-      <Text style={styles.hours}>🕒 {item.hours}</Text>
-      <Text style={styles.description} numberOfLines={2}>
-        {item.description}
-      </Text>
+        <View style={styles.costContainer}>
+          <Text style={styles.costText}>₹{item.averageCost}</Text>
+          <Text style={styles.forTwoText}>for two</Text>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 
@@ -159,70 +163,93 @@ const FoodScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#121212',
   },
   header: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#121212',
     paddingBottom: 10,
   },
   heading: {
-    color: '#333333',
-    fontSize: 28,
-    fontWeight: 'bold',
+    color: '#FFFFFF',
+    fontSize: 34,
+    fontWeight: '800',
     marginBottom: 5,
+    letterSpacing: -0.5,
   },
   subheading: {
     fontSize: 16,
-    color: '#666666',
+    color: '#AAAAAA',
   },
   foodList: {
     padding: 16,
     paddingTop: 8,
   },
   card: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    backgroundColor: '#1E1E1E',
+    borderRadius: 16,
+    marginBottom: 24,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#333',
   },
-  cardHeading: {
+  imageContainer: {
+    position: 'relative',
+  },
+  cardImage: {
+    width: '100%',
+    height: 220,
+  },
+  ratingBadge: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+    backgroundColor: '#266E3F', // Green rating box
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  ratingText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  cardContent: {
+    padding: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
+  },
+  textContainer: {
+    flex: 1,
+    marginRight: 16,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
-  },
-  rating: {
-    fontSize: 13,
-    color: '#333',
+    color: '#FFFFFF',
+    marginBottom: 4,
   },
   cuisine: {
     fontSize: 14,
-    color: 'black',
-    marginVertical: 4
+    color: '#AAAAAA',
+    marginBottom: 4,
   },
   location: {
     fontSize: 14,
-    color: '#333',
-    marginBottom: 4,
+    color: '#888888',
   },
-  hours: {
-    fontSize: 14,
-    color: '#333',
-    marginBottom: 8,
+  costContainer: {
+    alignItems: 'flex-end',
   },
-  description: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
+  costText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  forTwoText: {
+    fontSize: 12,
+    color: '#888888',
   },
   emptyState: {
     padding: 32,
