@@ -15,10 +15,19 @@ const FoodScreen = ({ navigation }) => {
 
   const categories = useMemo(() => {
     const uniqueCuisines = [...new Set(mockFood.map(item => item.cuisine))];
+
+    const getCuisineIcon = (cuisineName) => {
+      if (cuisineName.includes('Italian')) return 'pizza';
+      if (cuisineName.includes('Japanese')) return 'fish';
+      if (cuisineName.includes('Mexican')) return 'flame';
+      if (cuisineName.includes('American')) return 'fast-food';
+      return 'restaurant';
+    };
+
     return uniqueCuisines.map(cuisine => ({
       label: cuisine.replace(/[^\w\s]/g, '').trim(),
       value: cuisine.replace(/[^\w\s]/g, '').trim(),
-      icon: cuisine.match(/[^\w\s]/g)?.[0] || '🍽️'
+      icon: getCuisineIcon(cuisine)
     }));
   }, []);
 

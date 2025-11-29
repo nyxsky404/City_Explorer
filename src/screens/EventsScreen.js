@@ -15,10 +15,20 @@ const EventsScreen = ({ navigation }) => {
 
   const categories = useMemo(() => {
     const uniqueCategories = [...new Set(mockEvents.map(item => item.category))];
+
+    const getCategoryIcon = (categoryName) => {
+      if (categoryName.includes('Music')) return 'musical-notes';
+      if (categoryName.includes('Art')) return 'color-palette';
+      if (categoryName.includes('Food')) return 'restaurant';
+      if (categoryName.includes('Entertainment')) return 'film';
+      if (categoryName.includes('Shopping')) return 'cart';
+      return 'calendar';
+    };
+
     return uniqueCategories.map(category => ({
       label: category.replace(/[^\w\s]/g, '').trim(),
       value: category.replace(/[^\w\s]/g, '').trim(),
-      icon: category.match(/[^\w\s]/g)?.[0] || '📅'
+      icon: getCategoryIcon(category)
     }));
   }, []);
 

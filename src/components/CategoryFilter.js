@@ -57,7 +57,12 @@ const CategoryFilter = ({
                             delayLongPress={500}
                         >
                             {category.icon && (
-                                <Text style={styles.categoryIcon}>{category.icon}</Text>
+                                <Ionicons
+                                    name={category.icon}
+                                    size={18}
+                                    color={isSelected ? '#fff' : '#555'}
+                                    style={styles.categoryIcon}
+                                />
                             )}
                             <Text style={[
                                 styles.categoryText,
@@ -111,7 +116,6 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     categoryIcon: {
-        fontSize: 16,
         marginRight: 6,
     },
     categoryText: {
