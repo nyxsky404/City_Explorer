@@ -6,12 +6,6 @@
 
 ## 📱 Demo
 
-### 🎥 Video Walkthrough
-
-<div align="center">
-  <video src="assets/demo_video.mp4" width="100%" controls></video>
-</div>
-
 ### 📸 Screenshots
 
 <div align="center">
