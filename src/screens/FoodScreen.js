@@ -79,7 +79,7 @@ const FoodScreen = ({ navigation }) => {
 
     if (navigation) {
       navigation.navigate('FoodDetail', { restaurant: item });
-      console.log('Navigate to food detail:', item.id);
+
     }
   };
 

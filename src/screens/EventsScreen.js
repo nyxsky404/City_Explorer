@@ -87,7 +87,7 @@ const EventsScreen = ({ navigation }) => {
 
     if (navigation) {
       navigation.navigate('EventDetail', { event: item });
-      console.log('Navigate to event detail:', item.id);
+
     }
   };
 
