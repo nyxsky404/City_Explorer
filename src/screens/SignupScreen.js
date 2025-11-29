@@ -66,6 +66,7 @@ const SignupScreen = ({ navigation }) => {
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Enter your name"
+                                    placeholderTextColor="#888"
                                     value={name}
                                     onChangeText={setName}
                                     editable={!loading}
@@ -77,6 +78,7 @@ const SignupScreen = ({ navigation }) => {
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Enter your email"
+                                    placeholderTextColor="#888"
                                     value={email}
                                     onChangeText={setEmail}
                                     autoCapitalize="none"
@@ -90,6 +92,7 @@ const SignupScreen = ({ navigation }) => {
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Enter your password (min 6 characters)"
+                                    placeholderTextColor="#888"
                                     value={password}
                                     onChangeText={setPassword}
                                     secureTextEntry
@@ -102,6 +105,7 @@ const SignupScreen = ({ navigation }) => {
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Confirm your password"
+                                    placeholderTextColor="#888"
                                     value={confirmPassword}
                                     onChangeText={setConfirmPassword}
                                     secureTextEntry
@@ -138,7 +142,7 @@ const SignupScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#121212',
     },
     keyboardView: {
         flex: 1,
@@ -157,21 +161,19 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 32,
         fontWeight: 'bold',
-        color: '#333',
+        color: '#FFFFFF',
         marginBottom: 8,
     },
     subtitle: {
         fontSize: 16,
-        color: '#666',
+        color: '#AAAAAA',
     },
     form: {
-        backgroundColor: 'white',
+        backgroundColor: '#1E1E1E',
         borderRadius: 12,
         padding: 20,
-        shadowColor: 'black',
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        shadowOffset: { width: 0, height: 2 },
+        borderWidth: 1,
+        borderColor: '#333',
     },
     inputContainer: {
         marginBottom: 20,
@@ -179,19 +181,20 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 14,
         fontWeight: '600',
-        color: '#333',
+        color: '#FFFFFF',
         marginBottom: 8,
     },
     input: {
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: '#333',
         borderRadius: 8,
         padding: 12,
         fontSize: 16,
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#2C2C2C',
+        color: '#FFFFFF',
     },
     button: {
-        backgroundColor: '#007AFF',
+        backgroundColor: '#E23744',
         borderRadius: 8,
         padding: 16,
         alignItems: 'center',
@@ -211,11 +214,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     footerText: {
-        color: '#666',
+        color: '#AAAAAA',
         fontSize: 14,
     },
     link: {
-        color: '#007AFF',
+        color: '#E23744',
         fontSize: 14,
         fontWeight: '600',
     },

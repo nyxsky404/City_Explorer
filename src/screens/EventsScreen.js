@@ -5,8 +5,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
 import FilterModal from '../components/FilterModal';
+import { useLocation } from '../context/LocationContext';
 
 const EventsScreen = ({ navigation }) => {
+  const { currentCity } = useLocation();
+  console.log('Current City:', currentCity);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
@@ -59,6 +62,11 @@ const EventsScreen = ({ navigation }) => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (eventDate < today) {
+        return false;
+      }
+
+      // Filter by City
+      if (item.city !== currentCity) {
         return false;
       }
 
@@ -122,8 +130,8 @@ const EventsScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.heading}>Events</Text>
-        <Text style={styles.subheading}>Discover what's happening in your city</Text>
+        <Text style={styles.heading}>Events in {currentCity}</Text>
+        <Text style={styles.subheading}>Discover what's happening nearby</Text>
       </View>
 
       <SearchBar

@@ -13,6 +13,7 @@ import SignupScreen from './src/screens/SignupScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { SavedProvider } from './src/context/SavedContext';
+import { LocationProvider } from './src/context/LocationContext';
 
 
 
@@ -129,12 +130,14 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <AuthProvider>
-        <SavedProvider>
-          <NavigationContainer>
-            <RootNavigator />
-            <StatusBar style="auto" />
-          </NavigationContainer>
-        </SavedProvider>
+        <LocationProvider>
+          <SavedProvider>
+            <NavigationContainer>
+              <RootNavigator />
+              <StatusBar style="auto" />
+            </NavigationContainer>
+          </SavedProvider>
+        </LocationProvider>
       </AuthProvider>
     </SafeAreaProvider>
   );

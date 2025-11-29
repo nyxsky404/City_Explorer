@@ -5,8 +5,10 @@ import { mockFood } from '../data/foodData.js';
 import SearchBar from '../components/SearchBar';
 import CategoryFilter from '../components/CategoryFilter';
 import FilterModal from '../components/FilterModal';
+import { useLocation } from '../context/LocationContext';
 
 const FoodScreen = ({ navigation }) => {
+  const { currentCity } = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
@@ -58,6 +60,11 @@ const FoodScreen = ({ navigation }) => {
       const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.cuisine.toLowerCase().includes(searchQuery.toLowerCase());
+
+      // Filter by City
+      if (item.city !== currentCity) {
+        return false;
+      }
 
       const matchesCategory = !selectedCategory || item.cuisine.includes(selectedCategory);
 
@@ -114,8 +121,8 @@ const FoodScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.heading}>Food & Dining</Text>
-        <Text style={styles.subheading}>Discover great restaurants in your city</Text>
+        <Text style={styles.heading}>Food in {currentCity}</Text>
+        <Text style={styles.subheading}>Discover great restaurants nearby</Text>
       </View>
 
       <SearchBar
