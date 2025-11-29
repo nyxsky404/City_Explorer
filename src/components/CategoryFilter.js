@@ -3,13 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-nati
 import { Ionicons } from '@expo/vector-icons';
 import { usePersonalization } from '../context/PersonalizationContext';
 
-/**
- * CategoryFilter component with favorite functionality
- * @param {Array} categories - Array of category objects {label, value, icon}
- * @param {String} selectedCategory - Currently selected category
- * @param {Function} onSelectCategory - Callback when category selected
- * @param {String} type - Type of categories ('events' or 'food')
- */
+
 const CategoryFilter = ({
     categories,
     selectedCategory,
@@ -29,7 +23,7 @@ const CategoryFilter = ({
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}
             >
-                {/* All Categories Option */}
+
                 <TouchableOpacity
                     style={[
                         styles.categoryChip,
@@ -45,7 +39,7 @@ const CategoryFilter = ({
                     </Text>
                 </TouchableOpacity>
 
-                {/* Category Options */}
+
                 {categories.map((category) => {
                     const isSelected = selectedCategory === category.value;
                     const isFavorite = isFavoriteCategory(type, category.value);

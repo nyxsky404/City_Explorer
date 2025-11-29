@@ -4,11 +4,9 @@ const REVIEWS_KEY = '@city_explorer_reviews';
 const PHOTOS_KEY = '@city_explorer_photos';
 const CHECKINS_KEY = '@city_explorer_checkins';
 
-// ==================== REVIEWS ====================
 
-/**
- * Get all reviews for a specific item (event or restaurant)
- */
+
+
 export const getReviews = async (itemId) => {
     try {
         const reviewsJson = await AsyncStorage.getItem(REVIEWS_KEY);
@@ -20,9 +18,7 @@ export const getReviews = async (itemId) => {
     }
 };
 
-/**
- * Add a new review for an item
- */
+
 export const addReview = async (itemId, review) => {
     try {
         const reviewsJson = await AsyncStorage.getItem(REVIEWS_KEY);
@@ -48,20 +44,16 @@ export const addReview = async (itemId, review) => {
     }
 };
 
-/**
- * Calculate average rating for an item
- */
+
 export const calculateAverageRating = (reviews) => {
     if (!reviews || reviews.length === 0) return 0;
     const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
     return (sum / reviews.length).toFixed(1);
 };
 
-// ==================== PHOTOS ====================
 
-/**
- * Get all photos for a specific item
- */
+
+
 export const getPhotos = async (itemId) => {
     try {
         const photosJson = await AsyncStorage.getItem(PHOTOS_KEY);
@@ -73,9 +65,7 @@ export const getPhotos = async (itemId) => {
     }
 };
 
-/**
- * Add a new photo for an item
- */
+
 export const addPhoto = async (itemId, photoUri, userName = 'Anonymous') => {
     try {
         const photosJson = await AsyncStorage.getItem(PHOTOS_KEY);
@@ -102,9 +92,7 @@ export const addPhoto = async (itemId, photoUri, userName = 'Anonymous') => {
     }
 };
 
-/**
- * Delete a photo
- */
+
 export const deletePhoto = async (itemId, photoId) => {
     try {
         const photosJson = await AsyncStorage.getItem(PHOTOS_KEY);
@@ -122,11 +110,9 @@ export const deletePhoto = async (itemId, photoId) => {
     }
 };
 
-// ==================== CHECK-INS ====================
 
-/**
- * Get check-in count for an item
- */
+
+
 export const getCheckInCount = async (itemId) => {
     try {
         const checkInsJson = await AsyncStorage.getItem(CHECKINS_KEY);
@@ -138,9 +124,7 @@ export const getCheckInCount = async (itemId) => {
     }
 };
 
-/**
- * Check if user has checked in to an item
- */
+
 export const hasUserCheckedIn = async (itemId, userId) => {
     try {
         const checkInsJson = await AsyncStorage.getItem(CHECKINS_KEY);
@@ -155,9 +139,7 @@ export const hasUserCheckedIn = async (itemId, userId) => {
     }
 };
 
-/**
- * Add a check-in for an item
- */
+
 export const addCheckIn = async (itemId, userId, userName = 'Anonymous') => {
     try {
         const checkInsJson = await AsyncStorage.getItem(CHECKINS_KEY);
@@ -171,7 +153,7 @@ export const addCheckIn = async (itemId, userId, userName = 'Anonymous') => {
             };
         }
 
-        // Check if user already checked in
+
         if (allCheckIns[itemId].users.includes(userId)) {
             return { success: false, error: 'Already checked in' };
         }
@@ -193,9 +175,7 @@ export const addCheckIn = async (itemId, userId, userName = 'Anonymous') => {
     }
 };
 
-/**
- * Get recent check-ins for an item
- */
+
 export const getRecentCheckIns = async (itemId, limit = 5) => {
     try {
         const checkInsJson = await AsyncStorage.getItem(CHECKINS_KEY);

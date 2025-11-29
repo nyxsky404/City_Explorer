@@ -12,17 +12,17 @@ const FoodScreen = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const { trackViewedItem } = usePersonalization();
 
-  // Extract unique cuisines for categories
+
   const categories = useMemo(() => {
     const uniqueCuisines = [...new Set(mockFood.map(item => item.cuisine))];
     return uniqueCuisines.map(cuisine => ({
-      label: cuisine.replace(/[^\w\s]/g, '').trim(), // Remove emoji for label
+      label: cuisine.replace(/[^\w\s]/g, '').trim(),
       value: cuisine.replace(/[^\w\s]/g, '').trim(),
-      icon: cuisine.match(/[^\w\s]/g)?.[0] || '🍽️' // Extract emoji or default
+      icon: cuisine.match(/[^\w\s]/g)?.[0] || '🍽️'
     }));
   }, []);
 
-  // Filter food items
+
   const filteredFood = useMemo(() => {
     return mockFood.filter(item => {
       const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -37,7 +37,7 @@ const FoodScreen = ({ navigation }) => {
 
   const handleItemPress = (item) => {
     trackViewedItem(item);
-    // Navigate to detail screen if available, or just log for now
+    trackViewedItem(item);
     if (navigation) {
       navigation.navigate('FoodDetail', { restaurant: item });
       console.log('Navigate to food detail:', item.id);
@@ -79,7 +79,7 @@ const FoodScreen = ({ navigation }) => {
         searchText={searchQuery}
         onSearchChange={setSearchQuery}
         placeholder="Search restaurants, cuisines..."
-        onFilterPress={() => { }} // TODO: Implement advanced filters
+        onFilterPress={() => { }}
       />
 
       <CategoryFilter

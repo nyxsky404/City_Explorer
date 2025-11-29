@@ -3,13 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-nati
 import { Ionicons } from '@expo/vector-icons';
 import { usePersonalization } from '../context/PersonalizationContext';
 
-/**
- * ForYouSection component displaying personalized recommendations
- * @param {Array} allItems - All available items
- * @param {String} itemType - Type of items ('events' or 'food')
- * @param {Function} onItemPress - Callback when item is pressed
- * @param {Function} renderItem - Custom render function for items
- */
+
 const ForYouSection = ({
     allItems,
     itemType,
@@ -59,12 +53,12 @@ const ForYouSection = ({
                             style={styles.card}
                             onPress={() => onItemPress && onItemPress(item)}
                         >
-                            {/* Recommendation Badge */}
+
                             <View style={styles.badge}>
                                 <Ionicons name="star" size={12} color="#FFD700" />
                             </View>
 
-                            {/* Custom render or default */}
+
                             {renderItem ? (
                                 renderItem(item, reason)
                             ) : (

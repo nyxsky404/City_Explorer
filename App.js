@@ -20,7 +20,7 @@ import FoodDetailScreen from './src/screens/FoodDetailScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-// Auth Stack Navigator
+
 const AuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -30,7 +30,7 @@ const AuthStack = () => {
   );
 };
 
-// Events Stack
+
 const EventsStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -40,7 +40,7 @@ const EventsStack = () => {
   );
 };
 
-// Food Stack
+
 const FoodStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -50,7 +50,7 @@ const FoodStack = () => {
   );
 };
 
-// Main App Tab Navigator
+
 const MainTabs = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
@@ -88,7 +88,7 @@ const MainTabs = () => {
   );
 };
 
-// Root Navigator with Auth Check
+
 const RootNavigator = () => {
   const { isAuthenticated, loading } = useAuth();
 

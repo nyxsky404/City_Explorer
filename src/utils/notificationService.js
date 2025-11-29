@@ -2,7 +2,7 @@ import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 
-// Configure how notifications should be handled when app is in foreground
+
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
@@ -11,9 +11,7 @@ Notifications.setNotificationHandler({
     }),
 });
 
-/**
- * Request notification permissions from the user
- */
+
 export async function requestNotificationPermissions() {
     if (!Device.isDevice) {
         console.log('Must use physical device for Push Notifications');
@@ -33,7 +31,7 @@ export async function requestNotificationPermissions() {
         return false;
     }
 
-    // Configure notification channel for Android
+
     if (Platform.OS === 'android') {
         await Notifications.setNotificationChannelAsync('default', {
             name: 'default',
@@ -46,18 +44,14 @@ export async function requestNotificationPermissions() {
     return true;
 }
 
-/**
- * Schedule a notification for an event reminder
- * @param {Object} event - Event object with id, title, date, time
- * @param {number} minutesBefore - How many minutes before event to send reminder
- */
+
 export async function scheduleEventReminder(event, minutesBefore = 60) {
     try {
-        // Parse event date and time
+
         const eventDateTime = new Date(`${event.date} ${event.time.split(' - ')[0]}`);
         const reminderTime = new Date(eventDateTime.getTime() - minutesBefore * 60000);
 
-        // Don't schedule if reminder time is in the past
+
         if (reminderTime < new Date()) {
             console.log('Reminder time is in the past, skipping');
             return null;
@@ -86,10 +80,7 @@ export async function scheduleEventReminder(event, minutesBefore = 60) {
     }
 }
 
-/**
- * Send immediate notification for special offer
- * @param {Object} restaurant - Restaurant object with offer details
- */
+
 export async function sendSpecialOfferNotification(restaurant) {
     try {
         const notificationId = await Notifications.scheduleNotificationAsync({
@@ -103,7 +94,7 @@ export async function sendSpecialOfferNotification(restaurant) {
                 },
                 sound: true,
             },
-            trigger: null, // Send immediately
+            trigger: null,
         });
 
         return notificationId;
@@ -113,11 +104,7 @@ export async function sendSpecialOfferNotification(restaurant) {
     }
 }
 
-/**
- * Send notification for new addition nearby
- * @param {Object} item - Event or restaurant object
- * @param {string} itemType - 'event' or 'food'
- */
+
 export async function sendNewAdditionNotification(item, itemType) {
     try {
         const emoji = itemType === 'event' ? '🎪' : '🍽️';
@@ -135,7 +122,7 @@ export async function sendNewAdditionNotification(item, itemType) {
                 },
                 sound: true,
             },
-            trigger: null, // Send immediately
+            trigger: null,
         });
 
         return notificationId;
@@ -145,10 +132,7 @@ export async function sendNewAdditionNotification(item, itemType) {
     }
 }
 
-/**
- * Cancel a scheduled notification
- * @param {string} notificationId - ID of notification to cancel
- */
+
 export async function cancelNotification(notificationId) {
     try {
         await Notifications.cancelScheduledNotificationAsync(notificationId);
@@ -159,9 +143,7 @@ export async function cancelNotification(notificationId) {
     }
 }
 
-/**
- * Cancel all scheduled notifications
- */
+
 export async function cancelAllNotifications() {
     try {
         await Notifications.cancelAllScheduledNotificationsAsync();
@@ -172,9 +154,7 @@ export async function cancelAllNotifications() {
     }
 }
 
-/**
- * Get all scheduled notifications
- */
+
 export async function getAllScheduledNotifications() {
     try {
         const notifications = await Notifications.getAllScheduledNotificationsAsync();
@@ -185,18 +165,12 @@ export async function getAllScheduledNotifications() {
     }
 }
 
-/**
- * Set up notification response listener
- * @param {Function} callback - Function to call when notification is tapped
- */
+
 export function addNotificationResponseListener(callback) {
     return Notifications.addNotificationResponseReceivedListener(callback);
 }
 
-/**
- * Set up notification received listener (when app is in foreground)
- * @param {Function} callback - Function to call when notification is received
- */
+
 export function addNotificationReceivedListener(callback) {
     return Notifications.addNotificationReceivedListener(callback);
 }

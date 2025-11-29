@@ -35,7 +35,7 @@ const SavedScreen = () => {
       </View>
 
       <View style={styles.content}>
-        {/* User Info Card */}
+
         <View style={styles.card}>
           <View style={styles.avatarContainer}>
             <View style={styles.avatar}>
@@ -49,7 +49,7 @@ const SavedScreen = () => {
           </View>
         </View>
 
-        {/* Saved Items Section */}
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Saved Items</Text>
           <View style={styles.savedCard}>
@@ -58,7 +58,7 @@ const SavedScreen = () => {
           </View>
         </View>
 
-        {/* Logout Button */}
+
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Ionicons name="log-out-outline" size={20} color="#FF3B30" />
           <Text style={styles.logoutText}>Logout</Text>

@@ -54,7 +54,7 @@ const MapScreen = ({ navigation }) => {
         } catch (error) {
             console.error('Error getting location:', error);
             setLoading(false);
-            // Set default location (Delhi center)
+
             setLocation({
                 latitude: 28.6139,
                 longitude: 77.2090,
@@ -85,7 +85,7 @@ const MapScreen = ({ navigation }) => {
     };
 
     const handleMarkerPress = (item) => {
-        // Animate to marker location
+
         mapRef.current?.animateToRegion(
             {
                 latitude: item.latitude,
@@ -102,7 +102,7 @@ const MapScreen = ({ navigation }) => {
             item.latitude,
             item.longitude,
             item.title,
-            'd' // Default to driving
+            'd'
         );
     };
 
@@ -168,7 +168,7 @@ const MapScreen = ({ navigation }) => {
                 showsMyLocationButton={false}
                 provider={PROVIDER_GOOGLE}
             >
-                {/* Event Markers */}
+
                 {showEvents &&
                     mockEvents.map((event) => (
                         <Marker
@@ -205,7 +205,7 @@ const MapScreen = ({ navigation }) => {
                         </Marker>
                     ))}
 
-                {/* Food Markers */}
+
                 {showFood &&
                     mockFood.map((restaurant) => (
                         <Marker
@@ -241,7 +241,7 @@ const MapScreen = ({ navigation }) => {
                     ))}
             </MapView>
 
-            {/* Center on User Button */}
+
             <TouchableOpacity style={styles.centerButton} onPress={centerOnUser}>
                 <Ionicons name="locate" size={24} color="#007AFF" />
             </TouchableOpacity>

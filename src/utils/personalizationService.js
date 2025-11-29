@@ -10,7 +10,7 @@ const STORAGE_KEYS = {
 const MAX_RECENT_SEARCHES = 10;
 const MAX_VIEWED_ITEMS = 50;
 
-// Recent Searches Management
+
 export const saveRecentSearch = async (searchQuery) => {
     try {
         if (!searchQuery || searchQuery.trim() === '') return;
@@ -47,7 +47,7 @@ export const clearRecentSearches = async () => {
     }
 };
 
-// Favorite Categories Management
+
 export const saveFavoriteCategories = async (categories) => {
     try {
         await AsyncStorage.setItem(STORAGE_KEYS.FAVORITE_CATEGORIES, JSON.stringify(categories));
@@ -89,7 +89,7 @@ export const toggleFavoriteCategory = async (type, category) => {
     }
 };
 
-// Viewed Items Management
+
 export const saveViewedItem = async (item) => {
     try {
         const existing = await getViewedItems();
@@ -117,18 +117,18 @@ export const getViewedItems = async () => {
     }
 };
 
-// Recommendation Algorithm
+
 export const generateRecommendations = (allItems, favoriteCategories, viewedItems, recentSearches, itemType) => {
     if (!allItems || allItems.length === 0) return [];
 
     const favoriteCats = favoriteCategories[itemType] || [];
     const viewedIds = new Set(viewedItems.map(item => item.id));
 
-    // Score each item
+
     const scoredItems = allItems.map(item => {
         let score = item.popularity || 0;
 
-        // Boost for favorite categories
+
         if (itemType === 'events' && item.category) {
             const categoryName = item.category.replace(/[^\w\s]/g, '').trim();
             if (favoriteCats.includes(categoryName)) {
@@ -141,7 +141,7 @@ export const generateRecommendations = (allItems, favoriteCategories, viewedItem
             }
         }
 
-        // Boost for items matching recent searches
+
         if (recentSearches && recentSearches.length > 0) {
             const searchMatch = recentSearches.some(search =>
                 item.title?.toLowerCase().includes(search.toLowerCase()) ||
@@ -152,13 +152,13 @@ export const generateRecommendations = (allItems, favoriteCategories, viewedItem
             }
         }
 
-        // Boost for items with matching tags
+
         if (item.tags && favoriteCats.length > 0) {
             const tagMatches = item.tags.filter(tag => favoriteCats.includes(tag)).length;
             score += tagMatches * 15;
         }
 
-        // Slight penalty for already viewed items
+
         if (viewedIds.has(item.id)) {
             score -= 5;
         }
@@ -166,13 +166,13 @@ export const generateRecommendations = (allItems, favoriteCategories, viewedItem
         return { ...item, recommendationScore: score };
     });
 
-    // Sort by score and return top items
+
     return scoredItems
         .sort((a, b) => b.recommendationScore - a.recommendationScore)
         .slice(0, 10);
 };
 
-// Get recommendation reason
+
 export const getRecommendationReason = (item, favoriteCategories, itemType) => {
     const favoriteCats = favoriteCategories[itemType] || [];
 
@@ -198,7 +198,7 @@ export const getRecommendationReason = (item, favoriteCategories, itemType) => {
     return 'Popular in your area';
 };
 
-// Clear all personalization data
+
 export const clearAllPersonalizationData = async () => {
     try {
         await AsyncStorage.multiRemove([

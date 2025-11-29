@@ -33,7 +33,7 @@ const EventDetailScreen = ({ route, navigation }) => {
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Load social data on mount
+
     useEffect(() => {
         loadSocialData();
     }, []);
@@ -42,7 +42,7 @@ const EventDetailScreen = ({ route, navigation }) => {
         const storedReviews = await getReviews(event.id);
         if (storedReviews.length > 0) {
             setReviews([...(event.reviews || []), ...storedReviews]);
-            // Recalculate average rating
+
             const allReviews = [...(event.reviews || []), ...storedReviews];
             setAverageRating(calculateAverageRating(allReviews));
         }
@@ -54,7 +54,6 @@ const EventDetailScreen = ({ route, navigation }) => {
             setCheckInCount((event.checkIns || 0) + storedCheckIns);
         }
 
-        // Check if current user checked in (using a mock user ID for now)
         const checkedIn = await hasUserCheckedIn(event.id, 'current-user-id');
         setIsCheckedIn(checkedIn);
     };
@@ -78,7 +77,7 @@ const EventDetailScreen = ({ route, navigation }) => {
         setIsSubmitting(true);
         const result = await addReview(event.id, {
             ...reviewData,
-            userName: 'You', // In a real app, get from auth context
+            userName: 'You',
         });
 
         if (result.success) {
@@ -98,7 +97,7 @@ const EventDetailScreen = ({ route, navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
-                {/* Header */}
+
                 <View style={styles.header}>
                     <TouchableOpacity
                         style={styles.backButton}
@@ -110,7 +109,7 @@ const EventDetailScreen = ({ route, navigation }) => {
                     <View style={styles.placeholder} />
                 </View>
 
-                {/* Event Info */}
+
                 <View style={styles.content}>
                     <Text style={styles.title}>{event.title}</Text>
                     <View style={styles.ratingRow}>
@@ -134,7 +133,7 @@ const EventDetailScreen = ({ route, navigation }) => {
                         </View>
                     </View>
 
-                    {/* Social Actions */}
+
                     <SocialActions
                         onCheckIn={handleCheckIn}
                         onAddReview={() => setShowReviewModal(true)}
@@ -150,7 +149,7 @@ const EventDetailScreen = ({ route, navigation }) => {
                         <Text style={styles.description}>{event.description}</Text>
                     </View>
 
-                    {/* Map */}
+
                     <View style={styles.mapSection}>
                         <Text style={styles.sectionTitle}>Location</Text>
                         <MapView
@@ -175,7 +174,7 @@ const EventDetailScreen = ({ route, navigation }) => {
                         </MapView>
                     </View>
 
-                    {/* Directions Buttons */}
+
                     <View style={styles.directionsSection}>
                         <TouchableOpacity
                             style={styles.directionButton}
@@ -194,7 +193,7 @@ const EventDetailScreen = ({ route, navigation }) => {
                         </TouchableOpacity>
                     </View>
 
-                    {/* Reviews Section */}
+
                     <View style={styles.reviewsSection}>
                         <Text style={styles.sectionTitle}>Reviews</Text>
                         {reviews.length > 0 ? (

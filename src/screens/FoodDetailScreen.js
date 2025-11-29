@@ -33,7 +33,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Load social data on mount
+
     useEffect(() => {
         loadSocialData();
     }, []);
@@ -42,7 +42,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
         const storedReviews = await getReviews(restaurant.id);
         if (storedReviews.length > 0) {
             setReviews([...(restaurant.reviews || []), ...storedReviews]);
-            // Recalculate average rating
+
             const allReviews = [...(restaurant.reviews || []), ...storedReviews];
             setAverageRating(calculateAverageRating(allReviews));
         }
@@ -54,7 +54,6 @@ const FoodDetailScreen = ({ route, navigation }) => {
             setCheckInCount((restaurant.checkIns || 0) + storedCheckIns);
         }
 
-        // Check if current user checked in (using a mock user ID for now)
         const checkedIn = await hasUserCheckedIn(restaurant.id, 'current-user-id');
         setIsCheckedIn(checkedIn);
     };
@@ -83,7 +82,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
         setIsSubmitting(true);
         const result = await addReview(restaurant.id, {
             ...reviewData,
-            userName: 'You', // In a real app, get from auth context
+            userName: 'You',
         });
 
         if (result.success) {
@@ -103,7 +102,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
-                {/* Header */}
+
                 <View style={styles.header}>
                     <TouchableOpacity
                         style={styles.backButton}
@@ -115,7 +114,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
                     <View style={styles.placeholder} />
                 </View>
 
-                {/* Restaurant Info */}
+
                 <View style={styles.content}>
                     <Text style={styles.title}>{restaurant.title}</Text>
                     <View style={styles.ratingRow}>
@@ -139,7 +138,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
                         </View>
                     </View>
 
-                    {/* Social Actions */}
+
                     <SocialActions
                         onCheckIn={handleCheckIn}
                         onAddReview={() => setShowReviewModal(true)}
@@ -155,7 +154,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
                         <Text style={styles.description}>{restaurant.description}</Text>
                     </View>
 
-                    {/* Map */}
+
                     <View style={styles.mapSection}>
                         <Text style={styles.sectionTitle}>Location</Text>
                         <MapView
@@ -180,7 +179,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
                         </MapView>
                     </View>
 
-                    {/* Directions Buttons */}
+
                     <View style={styles.directionsSection}>
                         <TouchableOpacity
                             style={styles.directionButton}
@@ -199,7 +198,7 @@ const FoodDetailScreen = ({ route, navigation }) => {
                         </TouchableOpacity>
                     </View>
 
-                    {/* Reviews Section */}
+
                     <View style={styles.reviewsSection}>
                         <Text style={styles.sectionTitle}>Reviews</Text>
                         {reviews.length > 0 ? (

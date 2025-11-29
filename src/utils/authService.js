@@ -3,9 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const USERS_KEY = '@city_explorer_users';
 const CURRENT_USER_KEY = '@city_explorer_current_user';
 
-/**
- * Get all registered users from AsyncStorage
- */
+
 export const getAllUsers = async () => {
     try {
         const usersJson = await AsyncStorage.getItem(USERS_KEY);
@@ -16,9 +14,7 @@ export const getAllUsers = async () => {
     }
 };
 
-/**
- * Save all users to AsyncStorage
- */
+
 const saveAllUsers = async (users) => {
     try {
         await AsyncStorage.setItem(USERS_KEY, JSON.stringify(users));
@@ -29,39 +25,37 @@ const saveAllUsers = async (users) => {
     }
 };
 
-/**
- * Register a new user
- */
+
 export const registerUser = async (userData) => {
     try {
         const { name, email, password } = userData;
 
-        // Validate input
+
         if (!name || !email || !password) {
             throw new Error('All fields are required');
         }
 
-        // Validate email format
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             throw new Error('Invalid email format');
         }
 
-        // Check password length
+
         if (password.length < 6) {
             throw new Error('Password must be at least 6 characters');
         }
 
-        // Get existing users
+
         const users = await getAllUsers();
 
-        // Check if user already exists
+
         const existingUser = users.find(user => user.email.toLowerCase() === email.toLowerCase());
         if (existingUser) {
             throw new Error('User with this email already exists');
         }
 
-        // Create new user
+
         const newUser = {
             id: Date.now().toString(),
             name,
@@ -70,11 +64,11 @@ export const registerUser = async (userData) => {
             createdAt: new Date().toISOString(),
         };
 
-        // Add to users array
+
         users.push(newUser);
         await saveAllUsers(users);
 
-        // Return user without password
+
         const { password: _, ...userWithoutPassword } = newUser;
         return { success: true, user: userWithoutPassword };
     } catch (error) {
@@ -82,9 +76,7 @@ export const registerUser = async (userData) => {
     }
 };
 
-/**
- * Authenticate user with email and password
- */
+
 export const authenticateUser = async (email, password) => {
     try {
         if (!email || !password) {
@@ -100,7 +92,7 @@ export const authenticateUser = async (email, password) => {
             throw new Error('Invalid email or password');
         }
 
-        // Return user without password
+
         const { password: _, ...userWithoutPassword } = user;
         return { success: true, user: userWithoutPassword };
     } catch (error) {
@@ -108,9 +100,7 @@ export const authenticateUser = async (email, password) => {
     }
 };
 
-/**
- * Save current user to AsyncStorage
- */
+
 export const saveUser = async (userData) => {
     try {
         await AsyncStorage.setItem(CURRENT_USER_KEY, JSON.stringify(userData));
@@ -121,9 +111,7 @@ export const saveUser = async (userData) => {
     }
 };
 
-/**
- * Get current user from AsyncStorage
- */
+
 export const getUser = async () => {
     try {
         const userJson = await AsyncStorage.getItem(CURRENT_USER_KEY);
@@ -134,9 +122,7 @@ export const getUser = async () => {
     }
 };
 
-/**
- * Remove current user from AsyncStorage (logout)
- */
+
 export const removeUser = async () => {
     try {
         await AsyncStorage.removeItem(CURRENT_USER_KEY);

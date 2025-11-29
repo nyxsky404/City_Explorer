@@ -32,7 +32,7 @@ export const mockEvents = [
     photos: [],
     checkIns: 156,
     notificationScheduled: false,
-    reminderTime: 60, // minutes before event
+    reminderTime: 60,
     isSpecialOffer: false,
   },
   {
@@ -55,7 +55,7 @@ export const mockEvents = [
     photos: [],
     checkIns: 42,
     notificationScheduled: false,
-    reminderTime: 120, // minutes before event
+    reminderTime: 120,
     isSpecialOffer: false,
   },
   {
@@ -71,7 +71,7 @@ export const mockEvents = [
     tags: ['food', 'outdoor', 'family friendly', 'casual', 'music'],
     popularity: 88,
     notificationScheduled: false,
-    reminderTime: 30, // minutes before event
+    reminderTime: 30,
     isSpecialOffer: true,
     latitude: 40.7489,
     longitude: -73.9680,
@@ -102,7 +102,7 @@ export const mockEvents = [
     tags: ['movie', 'outdoor', 'family friendly', 'night', 'relaxing'],
     popularity: 82,
     notificationScheduled: false,
-    reminderTime: 90, // minutes before event
+    reminderTime: 90,
     isSpecialOffer: false,
     latitude: 40.7957,
     longitude: -73.9389,
@@ -123,7 +123,7 @@ export const mockEvents = [
     image: 'https://via.placeholder.com/300x200?text=Farmers+Market',
     category: '🛍️ Shopping',
     notificationScheduled: false,
-    reminderTime: 60, // minutes before event
+    reminderTime: 60,
     isSpecialOffer: false,
     latitude: 40.7614,
     longitude: -73.9776,

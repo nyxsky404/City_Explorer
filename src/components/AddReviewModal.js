@@ -30,7 +30,6 @@ const AddReviewModal = ({ visible, onClose, onSubmit, isSubmitting }) => {
 
         setError('');
         onSubmit({ rating, comment });
-        // Reset form after submission
         setRating(0);
         setComment('');
     };

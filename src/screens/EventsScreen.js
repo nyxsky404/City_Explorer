@@ -12,17 +12,17 @@ const EventsScreen = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const { trackViewedItem } = usePersonalization();
 
-  // Extract unique categories
+
   const categories = useMemo(() => {
     const uniqueCategories = [...new Set(mockEvents.map(item => item.category))];
     return uniqueCategories.map(category => ({
-      label: category.replace(/[^\w\s]/g, '').trim(), // Remove emoji for label
+      label: category.replace(/[^\w\s]/g, '').trim(),
       value: category.replace(/[^\w\s]/g, '').trim(),
-      icon: category.match(/[^\w\s]/g)?.[0] || '📅' // Extract emoji or default
+      icon: category.match(/[^\w\s]/g)?.[0] || '📅'
     }));
   }, []);
 
-  // Filter events
+
   const filteredEvents = useMemo(() => {
     return mockEvents.filter(item => {
       const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -37,7 +37,7 @@ const EventsScreen = ({ navigation }) => {
 
   const handleItemPress = (item) => {
     trackViewedItem(item);
-    // Navigate to detail screen if available
+    trackViewedItem(item);
     if (navigation) {
       navigation.navigate('EventDetail', { event: item });
       console.log('Navigate to event detail:', item.id);
@@ -78,7 +78,7 @@ const EventsScreen = ({ navigation }) => {
         searchText={searchQuery}
         onSearchChange={setSearchQuery}
         placeholder="Search events, categories..."
-        onFilterPress={() => { }} // TODO: Implement advanced filters
+        onFilterPress={() => { }}
       />
 
       <CategoryFilter

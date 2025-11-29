@@ -2,15 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-/**
- * FilterSection component for collapsible filter groups
- * @param {String} title - Section title
- * @param {Array} options - Array of filter options
- * @param {Array} selectedOptions - Currently selected options
- * @param {Function} onToggle - Callback when option toggled
- * @param {Boolean} expanded - Whether section is expanded
- * @param {Function} onToggleExpand - Callback to toggle expansion
- */
+
 const FilterSection = ({
     title,
     options,

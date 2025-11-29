@@ -11,14 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import FilterSection from './FilterSection';
 
-/**
- * FilterModal component for displaying filter options
- * @param {Boolean} visible - Whether modal is visible
- * @param {Function} onClose - Callback when modal closed
- * @param {Object} filters - Current filter state
- * @param {Function} onApply - Callback when filters applied
- * @param {String} type - Type of items ('food' or 'event')
- */
+
 const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
     const [localFilters, setLocalFilters] = useState(filters);
     const [expandedSections, setExpandedSections] = useState({
@@ -27,7 +20,7 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
         accessibility: true,
     });
 
-    // Price options
+
     const priceOptions = type === 'food'
         ? [
             { label: '$ (Under $15)', value: '$' },
@@ -41,7 +34,7 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
             { label: '$$$ (Over $50)', value: '$$$' },
         ];
 
-    // Dietary options (only for food)
+
     const dietaryOptions = [
         { label: '🌱 Vegan', value: 'vegan' },
         { label: '🥬 Vegetarian', value: 'vegetarian' },
@@ -50,7 +43,7 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
         { label: '🥜 Nut-Free', value: 'nut-free' },
     ];
 
-    // Accessibility options
+
     const accessibilityOptions = type === 'food'
         ? [
             { label: '♿ Wheelchair Accessible', value: 'wheelchair' },
@@ -114,7 +107,7 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
                 <View style={styles.overlay}>
                     <TouchableWithoutFeedback>
                         <View style={styles.modalContainer}>
-                            {/* Header */}
+
                             <View style={styles.header}>
                                 <Text style={styles.headerTitle}>Filters</Text>
                                 <TouchableOpacity onPress={onClose}>
@@ -122,9 +115,9 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
                                 </TouchableOpacity>
                             </View>
 
-                            {/* Filters */}
+
                             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-                                {/* Price Range */}
+
                                 <FilterSection
                                     title="Price Range"
                                     options={priceOptions}
@@ -134,7 +127,7 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
                                     onToggleExpand={() => toggleSection('price')}
                                 />
 
-                                {/* Dietary (only for food) */}
+
                                 {type === 'food' && (
                                     <FilterSection
                                         title="Dietary Options"
@@ -146,7 +139,7 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
                                     />
                                 )}
 
-                                {/* Accessibility */}
+
                                 <FilterSection
                                     title="Accessibility"
                                     options={accessibilityOptions}
@@ -157,7 +150,7 @@ const FilterModal = ({ visible, onClose, filters, onApply, type = 'food' }) => {
                                 />
                             </ScrollView>
 
-                            {/* Footer */}
+
                             <View style={styles.footer}>
                                 <TouchableOpacity
                                     style={styles.resetButton}

@@ -3,15 +3,7 @@ import { View, TextInput, TouchableOpacity, StyleSheet, Text, FlatList } from 'r
 import { Ionicons } from '@expo/vector-icons';
 import { usePersonalization } from '../context/PersonalizationContext';
 
-/**
- * SearchBar component with filter button and recent searches
- * @param {String} searchText - Current search text
- * @param {Function} onSearchChange - Callback when search text changes
- * @param {Function} onFilterPress - Callback when filter button pressed
- * @param {Number} filterCount - Number of active filters
- * @param {String} placeholder - Placeholder text
- * @param {Boolean} enableRecentSearches - Enable recent searches dropdown (default: true)
- */
+
 const SearchBar = ({
     searchText,
     onSearchChange,
@@ -79,7 +71,7 @@ const SearchBar = ({
                 )}
             </TouchableOpacity>
 
-            {/* Recent Searches Dropdown */}
+
             {showRecent && enableRecentSearches && recentSearches.length > 0 && (
                 <>
                     <TouchableOpacity

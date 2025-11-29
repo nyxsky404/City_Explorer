@@ -1,11 +1,11 @@
-// Mock notifications data
+
 export const mockNotifications = [
     {
         id: 'notif1',
         type: 'event_reminder',
         title: 'Event Reminder',
         message: 'Summer Music Festival starts in 1 hour at Central Park',
-        timestamp: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
+        timestamp: new Date(Date.now() - 3600000).toISOString(),
         read: false,
         relatedId: 'event1',
         relatedType: 'event',
@@ -16,7 +16,7 @@ export const mockNotifications = [
         type: 'special_offer',
         title: 'Special Offer!',
         message: "Mario's Italian Kitchen: 20% off all pasta dishes this weekend!",
-        timestamp: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
+        timestamp: new Date(Date.now() - 7200000).toISOString(),
         read: false,
         relatedId: 'food1',
         relatedType: 'food',
@@ -27,7 +27,7 @@ export const mockNotifications = [
         type: 'new_addition',
         title: 'New Restaurant Nearby!',
         message: 'Check out Sakura Sushi Bar at 456 Oak Avenue',
-        timestamp: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
+        timestamp: new Date(Date.now() - 86400000).toISOString(),
         read: true,
         relatedId: 'food2',
         relatedType: 'food',
@@ -38,7 +38,7 @@ export const mockNotifications = [
         type: 'new_addition',
         title: 'New Event Nearby!',
         message: 'Check out Art Gallery Opening at Downtown Art Gallery',
-        timestamp: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
+        timestamp: new Date(Date.now() - 172800000).toISOString(),
         read: true,
         relatedId: 'event2',
         relatedType: 'event',
@@ -49,7 +49,7 @@ export const mockNotifications = [
         type: 'event_reminder',
         title: 'Event Reminder',
         message: 'Food Truck Rally starts in 30 minutes at Market Square',
-        timestamp: new Date(Date.now() - 259200000).toISOString(), // 3 days ago
+        timestamp: new Date(Date.now() - 259200000).toISOString(),
         read: true,
         relatedId: 'event3',
         relatedType: 'event',
@@ -57,9 +57,7 @@ export const mockNotifications = [
     },
 ];
 
-/**
- * Get notification type configuration
- */
+
 export const notificationTypes = {
     event_reminder: {
         label: 'Event Reminders',

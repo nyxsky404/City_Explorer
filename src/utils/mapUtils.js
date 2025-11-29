@@ -1,12 +1,6 @@
 import { Linking, Platform, Alert } from 'react-native';
 
-/**
- * Open device's maps app with directions to a specific location
- * @param {number} latitude - Destination latitude
- * @param {number} longitude - Destination longitude
- * @param {string} label - Location label/name
- * @param {string} travelMode - Travel mode: 'd' (driving), 'w' (walking), 'r' (transit)
- */
+
 export const openMapsWithDirections = (latitude, longitude, label = '', travelMode = 'd') => {
     const scheme = Platform.select({
         ios: 'maps:0,0?q=',
@@ -19,10 +13,10 @@ export const openMapsWithDirections = (latitude, longitude, label = '', travelMo
     let url;
 
     if (Platform.OS === 'ios') {
-        // iOS Apple Maps
+
         url = `${scheme}${labelEncoded}@${latLng}&dirflg=${travelMode}`;
     } else {
-        // Android Google Maps
+
         url = `${scheme}${latLng}(${labelEncoded})&travelmode=${travelMode === 'd' ? 'driving' : travelMode === 'w' ? 'walking' : 'transit'}`;
     }
 
@@ -31,7 +25,7 @@ export const openMapsWithDirections = (latitude, longitude, label = '', travelMo
             if (supported) {
                 return Linking.openURL(url);
             } else {
-                // Fallback to Google Maps web
+
                 const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latLng}&travelmode=${travelMode === 'd' ? 'driving' : travelMode === 'w' ? 'walking' : 'transit'}`;
                 return Linking.openURL(googleMapsUrl);
             }
@@ -42,11 +36,7 @@ export const openMapsWithDirections = (latitude, longitude, label = '', travelMo
         });
 };
 
-/**
- * Calculate region that fits all markers
- * @param {Array} markers - Array of marker objects with latitude and longitude
- * @returns {Object} Region object with latitude, longitude, and deltas
- */
+
 export const getRegionForMarkers = (markers) => {
     if (!markers || markers.length === 0) {
         return {
@@ -71,27 +61,20 @@ export const getRegionForMarkers = (markers) => {
 
     const midLat = (minLat + maxLat) / 2;
     const midLng = (minLng + maxLng) / 2;
-    const deltaLat = (maxLat - minLat) * 1.5; // Add 50% padding
+    const deltaLat = (maxLat - minLat) * 1.5;
     const deltaLng = (maxLng - minLng) * 1.5;
 
     return {
         latitude: midLat,
         longitude: midLng,
-        latitudeDelta: Math.max(deltaLat, 0.05), // Minimum delta
+        latitudeDelta: Math.max(deltaLat, 0.05),
         longitudeDelta: Math.max(deltaLng, 0.05),
     };
 };
 
-/**
- * Calculate distance between two coordinates in kilometers
- * @param {number} lat1 - First latitude
- * @param {number} lon1 - First longitude
- * @param {number} lat2 - Second latitude
- * @param {number} lon2 - Second longitude
- * @returns {number} Distance in kilometers
- */
+
 export const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371; // Radius of the Earth in km
+    const R = 6371;
     const dLat = toRad(lat2 - lat1);
     const dLon = toRad(lon2 - lon1);
 
@@ -108,20 +91,12 @@ export const calculateDistance = (lat1, lon1, lat2, lon2) => {
     return distance;
 };
 
-/**
- * Convert degrees to radians
- * @param {number} degrees - Degrees to convert
- * @returns {number} Radians
- */
+
 const toRad = (degrees) => {
     return degrees * (Math.PI / 180);
 };
 
-/**
- * Format distance for display
- * @param {number} distanceInKm - Distance in kilometers
- * @returns {string} Formatted distance string
- */
+
 export const formatDistance = (distanceInKm) => {
     if (distanceInKm < 1) {
         return `${Math.round(distanceInKm * 1000)}m`;

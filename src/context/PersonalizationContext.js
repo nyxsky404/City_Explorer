@@ -20,7 +20,7 @@ export const PersonalizationProvider = ({ children }) => {
     const [viewedItems, setViewedItems] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Load personalization data on mount
+
     useEffect(() => {
         loadPersonalizationData();
     }, []);
@@ -43,7 +43,7 @@ export const PersonalizationProvider = ({ children }) => {
         }
     };
 
-    // Add search to recent searches
+
     const addRecentSearch = useCallback(async (searchQuery) => {
         try {
             const updated = await saveRecentSearch(searchQuery);
@@ -53,7 +53,7 @@ export const PersonalizationProvider = ({ children }) => {
         }
     }, []);
 
-    // Clear recent searches
+
     const clearSearchHistory = useCallback(async () => {
         try {
             await clearRecentSearches();
@@ -63,7 +63,7 @@ export const PersonalizationProvider = ({ children }) => {
         }
     }, []);
 
-    // Toggle favorite category
+
     const toggleFavoriteCategory = useCallback(async (type, category) => {
         try {
             const updated = await toggleFavoriteCategoryService(type, category);
@@ -73,12 +73,12 @@ export const PersonalizationProvider = ({ children }) => {
         }
     }, []);
 
-    // Check if category is favorite
+
     const isFavoriteCategory = useCallback((type, category) => {
         return favoriteCategories[type]?.includes(category) || false;
     }, [favoriteCategories]);
 
-    // Track viewed item
+
     const trackViewedItem = useCallback(async (item) => {
         try {
             const updated = await saveViewedItem(item);
@@ -88,7 +88,7 @@ export const PersonalizationProvider = ({ children }) => {
         }
     }, []);
 
-    // Get recommendations for a specific type
+
     const getRecommendations = useCallback((allItems, itemType) => {
         return generateRecommendations(
             allItems,
@@ -99,12 +99,12 @@ export const PersonalizationProvider = ({ children }) => {
         );
     }, [favoriteCategories, viewedItems, recentSearches]);
 
-    // Get recommendation reason for an item
+
     const getItemRecommendationReason = useCallback((item, itemType) => {
         return getRecommendationReason(item, favoriteCategories, itemType);
     }, [favoriteCategories]);
 
-    // Clear all personalization data
+
     const clearAllData = useCallback(async () => {
         try {
             await clearAllPersonalizationData();
@@ -119,28 +119,28 @@ export const PersonalizationProvider = ({ children }) => {
     return (
         <PersonalizationContext.Provider
             value={{
-                // State
+
                 recentSearches,
                 favoriteCategories,
                 viewedItems,
                 loading,
 
-                // Search functions
+
                 addRecentSearch,
                 clearSearchHistory,
 
-                // Category functions
+
                 toggleFavoriteCategory,
                 isFavoriteCategory,
 
-                // Tracking functions
+
                 trackViewedItem,
 
-                // Recommendation functions
+
                 getRecommendations,
                 getItemRecommendationReason,
 
-                // Utility functions
+
                 clearAllData,
             }}
         >
