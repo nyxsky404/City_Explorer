@@ -1,4 +1,4 @@
-# 🏙️ City Explorer - Premium Edition
+# 🏙️ City Explorer
 
 **A Premium Mobile Guide for Local Events and Food Discovery**
 
